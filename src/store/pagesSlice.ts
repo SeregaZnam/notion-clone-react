@@ -1,10 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
-
-interface PageModel {
-  id: string;
-  title: string;
-}
+import { PageModel } from "../types/Page.model";
 
 interface PagesState {
   pages: PageModel[];
@@ -42,8 +38,12 @@ export const pagesSlice = createSlice({
         }),
       };
     },
+    addComment: (state, action: PayloadAction<{ pageId: string; text: string }>) => {
+      console.log(action);
+      return state;
+    },
   },
 });
 
-export const { addPage, changeTitle } = pagesSlice.actions;
+export const { addPage, changeTitle, addComment } = pagesSlice.actions;
 export const pagesReducer = pagesSlice.reducer;

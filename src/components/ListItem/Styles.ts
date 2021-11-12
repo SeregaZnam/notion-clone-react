@@ -9,6 +9,7 @@ export const StyledLiItem = styled.li`
   justify-content: space-between;
   padding: 2px 14px;
   height: 22px;
+  transition: all 0.1s;
 
   :hover {
     background-color: rgba(55, 53, 47, 0.08);
@@ -28,7 +29,7 @@ export const StyledLink = styled(Link)`
 export const StyledMoreHorizIcon = styled(MoreHorizIcon)`
   width: 20px !important;
   height: 20px !important;
-  color: rgba(55,53,47,0.4);
+  color: rgba(55, 53, 47, 0.4);
 
   :hover {
     background-color: rgba(55, 53, 47, 0.1);
@@ -39,10 +40,18 @@ export const StyledMoreHorizIcon = styled(MoreHorizIcon)`
 export const StyledControlPointIcon = styled(ControlPointIcon)`
   width: 20px !important;
   height: 20px !important;
-  color: rgba(55,53,47,0.4);
+  color: rgba(55, 53, 47, 0.4);
 
   :hover {
     background-color: rgba(55, 53, 47, 0.1);
     border-radius: 3px;
+  }
+`;
+
+export const StyledControlBlock = styled.div`
+  visibility: hidden;
+
+  ${StyledLiItem}:hover & {
+    visibility: visible;
   }
 `;

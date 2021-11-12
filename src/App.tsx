@@ -1,11 +1,17 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Page } from "./components/Page";
 import { Navbar } from "./components/Navbar";
+import styled from "styled-components";
+
+const StyledMain = styled.main`
+  display: flex;
+  height: 100vh;
+`;
 
 function App() {
   return (
     <>
-      <main style={{ display: "flex", height: "100vh" }}>
+      <StyledMain>
         <Router>
           <Navbar />
           <Switch>
@@ -14,7 +20,7 @@ function App() {
             </Route>
           </Switch>
         </Router>
-      </main>
+      </StyledMain>
     </>
   );
 }
