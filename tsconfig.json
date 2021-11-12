@@ -6,6 +6,15 @@
       "dom.iterable",
       "esnext"
     ],
+    "downlevelIteration": true,
+    "strictNullChecks": false, // TODO: enable when possible
+    "strictBindCallApply": false, // TODO: enable when possible
+    "strictFunctionTypes": false, // TODO: enable when possible
+    "strictPropertyInitialization": false, // Doesn't go well with Angular `@Input` decorator
+    "noImplicitAny": false, // TODO: enable when possible
+    "noUnusedParameters": false, // We don't use first parameter in some functions
+    "noUnusedLocals": false, // TODO: enable when possible
+    "noImplicitReturns": false, // TODO: enable when possible
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,

@@ -1,0 +1,40 @@
+{
+  "posts": [
+    {
+      "id": "e8ad59b3-6342-46a2-b3df-57f06b3910f6",
+      "text": "123",
+      "author": "test1",
+      "likes": 0,
+      "dislikes": 0,
+      "date": "Tue Nov 09 2021",
+      "imageBlob": null
+    },
+    {
+      "id": "c2b3391c-db6f-4383-baea-b84157142b44",
+      "text": "1",
+      "author": "test1",
+      "likes": 0,
+      "dislikes": 0,
+      "date": "Tue Nov 09 2021",
+      "imageBlob": null
+    },
+    {
+      "id": "5a3c3648-67ee-4365-9249-b7cf2ba54a62",
+      "text": "2",
+      "author": "test1",
+      "likes": 0,
+      "dislikes": 0,
+      "date": "Tue Nov 09 2021",
+      "imageBlob": null
+    },
+    {
+      "id": "869eb962-aa08-49ac-a272-632c5313b97d",
+      "text": "22",
+      "author": "test1",
+      "likes": 0,
+      "dislikes": 0,
+      "date": "Tue Nov 09 2021",
+      "imageBlob": null
+    }
+  ]
+}

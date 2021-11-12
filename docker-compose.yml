@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  app:
+    build:
+      context: .
+    volumes:
+      - .:/todo
+    ports:
+      - "3000:3000"
+    image: app:react
+    container_name: react_container
+    command: npm start
+  json-server:
+    image: vimagick/json-server
+    command: -H 0.0.0.0 -p 4200 -w posts.json
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./data:/data
+    restart: always
+
+networks:
+  nesjs-network:
