@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useHistory, useParams, useLocation, useRouteMatch } from 'react-router-dom';
-import AddIcon from '@mui/icons-material/Add';
-import { StyledNavbar, StyledUlList } from './Styles';
-import { ListItem } from '../ListItem';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { addPage } from '../../store/pagesSlice';
+import React, { useEffect, useState } from "react";
+import { Link, useHistory, useParams, useLocation, useRouteMatch } from "react-router-dom";
+import AddIcon from "@mui/icons-material/Add";
+import { StyledNavbar, StyledUlList } from "./Styles";
+import { ListItem } from "../ListItem";
+import { NavbarButton } from "../NavbarButton";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { addPage } from "../../store/pagesSlice";
 
 export const Navbar = () => {
   const pages = useAppSelector((state) => state.pages.pages);
@@ -29,11 +30,9 @@ export const Navbar = () => {
     <StyledNavbar>
       <StyledUlList>
         {pages.map((page) => (
-          <ListItem key={page.id} title={page.title} linkId={page.id} />
+          <ListItem key={page.id} title={page.title} linkId={page.id} defaultTitle="Untitled" />
         ))}
-        <li style={{ display: 'flex', padding: '2px 14px' }} onClick={createNewPage}>
-          <AddIcon /> Add a page
-        </li>
+        <NavbarButton handleClick={createNewPage} />
       </StyledUlList>
     </StyledNavbar>
   );

@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { v4 as uuidv4 } from 'uuid';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { v4 as uuidv4 } from "uuid";
 
 interface PageModel {
   id: string;
@@ -15,27 +15,24 @@ const initialState: PagesState = {
 };
 
 export const pagesSlice = createSlice({
-  name: 'pages',
+  name: "pages",
   initialState,
   reducers: {
     addPage: (state) => {
       const newPage: PageModel = {
         id: uuidv4(),
-        title: '',
+        title: "",
       };
       return {
         ...state,
-        pages: [
-          ...state.pages,
-          newPage,
-        ],
+        pages: [...state.pages, newPage],
       };
     },
-    changeTitle: (state, action: PayloadAction<{ index: number; title: string }>) => {
+    changeTitle: (state, action: PayloadAction<{ id: string; title: string }>) => {
       return {
         ...state,
-        pages: state.pages.map((page, index) => {
-          if (index === action.payload.index) {
+        pages: state.pages.map((page) => {
+          if (page.id === action.payload.id) {
             return {
               ...page,
               title: action.payload.title,

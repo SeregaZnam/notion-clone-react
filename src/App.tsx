@@ -1,12 +1,11 @@
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
-import { Page } from './components/Page';
-import React from 'react';
-import { Navbar } from './components/Navbar';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Page } from "./components/Page";
+import { Navbar } from "./components/Navbar";
 
 function App() {
   return (
     <>
-      <main style={{ display: 'flex', height: '100vh' }}>
+      <main style={{ display: "flex", height: "100vh" }}>
         <Router>
           <Navbar />
           <Switch>

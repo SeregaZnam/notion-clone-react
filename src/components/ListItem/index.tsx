@@ -1,19 +1,31 @@
-import React, { FC } from 'react';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import { Link } from 'react-router-dom';
-import { StyledLiItem } from './Styles';
+import React, { FC } from "react";
+import { Link } from "react-router-dom";
+import {
+  StyledArrowRightIcon,
+  StyledControlPointIcon,
+  StyledLiItem,
+  StyledLink,
+  StyledMoreHorizIcon,
+} from "./Styles";
+import { Box } from "@mui/system";
 
 interface Props {
   title: string;
+  defaultTitle?: string;
   linkId: string;
 }
 
-export const ListItem: FC<Props> = ({ title, linkId }) => {
+export const ListItem: FC<Props> = ({ title, defaultTitle = "", linkId }) => {
   return (
     <StyledLiItem>
-      <ArrowRightIcon />
-      <Link to={`/${linkId}`}>{title}</Link>
-        <input type="text"/>
+      <Box sx={{ display: "flex" }}>
+        <StyledArrowRightIcon />
+        <StyledLink to={`/${linkId}`}>{title || defaultTitle}</StyledLink>
+      </Box>
+      <div>
+        <StyledMoreHorizIcon />
+        <StyledControlPointIcon />
+      </div>
     </StyledLiItem>
   );
 };

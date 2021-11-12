@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledNavbar = styled.nav`
-  background-color: #d3d1cb;
-  width: 240px;
+  background-color: rgb(247, 246, 243);
+  min-width: 240px;
   height: 100%;
   display: block;
 `;
