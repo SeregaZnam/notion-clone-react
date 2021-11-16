@@ -17,6 +17,12 @@ export const StyledLiItem = styled.li`
   }
 `;
 
+export const StyledPageIcon = styled.img`
+  width: 14px;
+  height: 14px;
+  margin-right: 10px;
+`;
+
 export const StyledArrowRightIcon = styled(ArrowRightIcon)`
   margin-right: 8px;
 `;

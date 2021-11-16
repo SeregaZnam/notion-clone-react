@@ -1,7 +1,8 @@
+import { CommentModel } from "./Comment.model";
+
 export interface PageModel {
   id: string;
   title: string;
-  comment?: {
-    text: string;
-  };
+  srcIcon: string;
+  comments: CommentModel[];
 }

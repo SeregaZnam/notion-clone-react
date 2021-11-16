@@ -30,7 +30,13 @@ export const Navbar = () => {
     <StyledNavbar>
       <StyledUlList>
         {pages.map((page) => (
-          <ListItem key={page.id} title={page.title} linkId={page.id} defaultTitle="Untitled" />
+          <ListItem
+            key={page.id}
+            title={page.title}
+            linkId={page.id}
+            srcIcon={page.srcIcon}
+            defaultTitle="Untitled"
+          />
         ))}
         <NavbarButton handleClick={createNewPage} />
       </StyledUlList>
