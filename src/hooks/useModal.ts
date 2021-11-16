@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { ModalProps, PositionModel } from "../components/Modal";
+import { ModalProps, PositionModel } from "../shared/components/Modal";
 
 const initialModalValue: Partial<ModalProps> = {
   title: "modal",
@@ -24,7 +24,7 @@ export const useModal = (initialValue = initialModalValue) => {
       if (isOpenModal) {
         const modalNode = document.querySelector(`[title="${title}"]`);
 
-        if (!modalNode?.contains(event.target)) {
+        if (!modalNode?.contains(event.target) && !event.target.hidden) {
           setIsOpenModal(false);
         }
       }

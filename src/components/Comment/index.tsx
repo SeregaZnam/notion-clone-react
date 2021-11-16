@@ -5,6 +5,10 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { Box } from "@mui/material";
 import { useModal } from "../../hooks/useModal";
 import { ModalOptionsComments } from "../ModalOptionsComments";
+import { useAppDispatch } from "../../store/hooks";
+import { removeComment } from "../../store/pagesSlice";
+import { ModalEditorComment } from "../ModalEditorComment";
+import { InputPageComment } from "../InputPageComment";
 
 interface Props {
   comment: CommentModel;
@@ -15,9 +19,19 @@ interface Props {
 export const Comment: FC<Props> = ({ comment, optionText, onOptionClick }) => {
   const formatter = new Intl.RelativeTimeFormat("en-US", { numeric: "auto" });
   const [commentDate, setCommentDate] = useState("Just now");
+  const dispatch = useAppDispatch();
 
-  const { title, position, isOpenModal, openModal } = useModal({
+  const { title, position, isOpenModal, openModal, closeModal } = useModal({
     title: "commentOptions",
+  });
+
+  const {
+    title: titleEditor,
+    position: positionEditor,
+    isOpenModal: isOpenModalEditor,
+    openModal: openModalEditor,
+  } = useModal({
+    title: "editorComment",
   });
 
   setInterval(() => {
@@ -38,6 +52,10 @@ export const Comment: FC<Props> = ({ comment, optionText, onOptionClick }) => {
     }
   }, 60000);
 
+  const deleteComment = () => {
+    dispatch(removeComment({ pageId: comment.pageId, commentId: comment.id }));
+  };
+
   return (
     <StyledComment>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -48,14 +66,30 @@ export const Comment: FC<Props> = ({ comment, optionText, onOptionClick }) => {
           </div>
           <MoreHorizIcon
             className="more-option-icon"
-            onClick={(event) => openModal([`${event.pageX - 180}px`, `${event.pageY}px`])}
+            onClick={(event) => openModal([`${event.pageX - 200}px`, `${event.pageY}px`])}
           />
         </StyledControlOptions>
       </Box>
       <div>{comment.text}</div>
       <img src={comment.imageBlob as unknown as string} />
 
-      <ModalOptionsComments title={title} position={position} isOpenModal={isOpenModal} />
+      <ModalOptionsComments
+        title={title}
+        position={position}
+        isOpenModal={isOpenModal}
+        deleteComment={deleteComment}
+        openEditorComment={(event) => {
+          openModalEditor([`${event.pageX - 200}px`, `${event.pageY}px`]);
+          closeModal();
+        }}
+      />
+
+      <ModalEditorComment
+        title={titleEditor}
+        position={positionEditor}
+        isOpenModal={isOpenModalEditor}
+        comment={comment}
+      />
     </StyledComment>
   );
 };

@@ -114,6 +114,22 @@ export const pagesSlice = createSlice({
         }),
       };
     },
+    removeComment: (state, action: PayloadAction<{ pageId: string; commentId: string }>) => {
+      return {
+        ...state,
+        pages: state.pages.map((page) => {
+          if (page.id === action.payload.pageId) {
+            return {
+              ...page,
+              comments: page.comments.filter((comment) => comment.id !== action.payload.commentId),
+            };
+          }
+
+          return page;
+        }),
+      };
+    },
+    changeComment: (state, action) => {},
     addPageIcon: (state, action: PayloadAction<{ pageId: string; srcIcon: string }>) => {
       return {
         ...state,
@@ -131,6 +147,14 @@ export const pagesSlice = createSlice({
   },
 });
 
-export const { addPage, changeTitle, addComment, resolveComment, reopenComment, addPageIcon } =
-  pagesSlice.actions;
+export const {
+  addPage,
+  changeTitle,
+  addComment,
+  resolveComment,
+  reopenComment,
+  removeComment,
+  addPageIcon,
+  changeComment,
+} = pagesSlice.actions;
 export const pagesReducer = pagesSlice.reducer;

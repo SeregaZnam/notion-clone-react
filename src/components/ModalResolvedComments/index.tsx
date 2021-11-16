@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { CommentsSection } from "../CommentsSection";
-import { Modal, PositionModel } from "../Modal";
+import { Modal, PositionModel } from "../../shared/components/Modal";
 import { reopenComment } from "../../store/pagesSlice";
 import { CommentModel } from "../../types/Comment.model";
 import { useAppDispatch } from "../../store/hooks";

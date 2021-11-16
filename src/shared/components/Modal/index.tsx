@@ -8,9 +8,10 @@ export interface ModalProps {
   title: string;
   isOpen: boolean;
   position: PositionModel;
+  className?: string;
 }
 
-export const Modal: FC<ModalProps> = ({ title, isOpen, position, children }) => {
+export const Modal: FC<ModalProps> = ({ title, isOpen, position, children, className }) => {
   if (!isOpen) {
     return null;
   }
@@ -19,7 +20,7 @@ export const Modal: FC<ModalProps> = ({ title, isOpen, position, children }) => 
 
   return ReactDOM.createPortal(
     <>
-      <StyledMenu title={title} positionX={x} positionY={y}>
+      <StyledMenu title={title} positionX={x} positionY={y} className={className}>
         {children}
       </StyledMenu>
     </>,

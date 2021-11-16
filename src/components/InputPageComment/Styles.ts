@@ -11,6 +11,7 @@ export const StyledInputComment = styled.input`
   outline: none;
   padding: 6px 4px 12px;
   width: 100%;
+  background: transparent;
 `;
 
 export const StyledAttachFileIcon = styled(AttachFileIcon)<any>`
