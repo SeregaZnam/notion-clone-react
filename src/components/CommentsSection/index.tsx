@@ -4,10 +4,17 @@ import { CommentModel } from "../../types/Comment.model";
 
 interface Props {
   comments: CommentModel[];
-  onResolveComment: (pageId: string, commentId: string) => void;
+  showResolvedComment?: boolean;
+  optionText: string;
+  onOptionClick: (pageId: string, commentId: string) => void;
 }
 
-export const CommentsSection: FC<Props> = ({ comments, onResolveComment }) => {
+export const CommentsSection: FC<Props> = ({
+  comments,
+  showResolvedComment = false,
+  optionText,
+  onOptionClick,
+}) => {
   if (comments.length === 0) {
     return null;
   }
@@ -15,8 +22,15 @@ export const CommentsSection: FC<Props> = ({ comments, onResolveComment }) => {
   return (
     <>
       {comments.map((comment) => {
-        if (!comment.resolved) {
-          return <Comment comment={comment} key={comment.id} onResolveComment={onResolveComment} />;
+        if (showResolvedComment === comment.resolved) {
+          return (
+            <Comment
+              comment={comment}
+              key={comment.id}
+              optionText={optionText}
+              onOptionClick={onOptionClick}
+            />
+          );
         }
       })}
     </>

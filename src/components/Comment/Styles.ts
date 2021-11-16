@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const StyledComment = styled.div`
-  
+  padding: 6px 16px 6px 14px;
 `;
 
 export const StyledCommentDate = styled.div`
@@ -33,9 +33,9 @@ export const StyledControlOptions = styled.div`
       cursor: pointer;
       background: rgb(225, 225, 225);
     }
-    
+
     &:active {
-      background: rgba(55, 53, 47, 0.16)
+      background: rgba(55, 53, 47, 0.16);
     }
   }
 
@@ -54,7 +54,7 @@ export const StyledControlOptions = styled.div`
     }
 
     &:active {
-      background: rgba(55, 53, 47, 0.16)
+      background: rgba(55, 53, 47, 0.16);
     }
   }
 `;

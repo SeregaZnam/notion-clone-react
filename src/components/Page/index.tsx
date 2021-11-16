@@ -15,21 +15,25 @@ import { IconControl } from "../IconControl";
 import { TitlePage } from "../TitlePage";
 import { useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { SyntheticEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { InputPageComment } from "../InputPageComment";
 import { addComment, addPageIcon, resolveComment } from "../../store/pagesSlice";
 import { useHistory } from "react-router-dom";
 import { CommentsSection } from "../CommentsSection";
 import CheckIcon from "@mui/icons-material/Check";
-import { openModal } from "../../store/modalSlice";
-import { Comment } from "../Comment";
+import { useModal } from "../../hooks/useModal";
+import { ModalResolvedComments } from "../ModalResolvedComments";
+import { ModalOptionsComments } from "../ModalOptionsComments";
 
 export const Page = () => {
-  const [visibleInputComment, setVisibleInputComment] = useState(false);
+  const { id } = useParams<{ id: string }>();
+  const { title, position, isOpenModal, openModal } = useModal({
+    title: "commentResolved",
+  });
   const [fileBlob, setFileBlob] = useState(null);
+  const [visibleInputComment, setVisibleInputComment] = useState(false);
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const { id } = useParams<{ id: string }>();
   const page = useAppSelector((state) => state.pages.pages.find((page) => page.id === id));
 
   useEffect(() => {
@@ -54,33 +58,13 @@ export const Page = () => {
     );
   };
 
-  const onHandleAddComment = () => {
-    setVisibleInputComment(true);
-  };
-
   const onResolveComment = (pageId: string, commentId: string) => {
     dispatch(resolveComment({ pageId, commentId }));
-  };
-
-  const openContextMenu = (event) => {
-    // console.log(event);
-    const node = <CommentsSection comments={page.comments} onResolveComment={onResolveComment} />;
-
-    dispatch(
-      openModal({
-        position: [`${event.pageX}px`, `${event.pageY}px`],
-        node,
-      }),
-    );
   };
 
   const countResolvedComments = page.comments.reduce((count, comment) => {
     return comment.resolved ? count + 1 : count;
   }, 0);
-
-  document.addEventListener("click", (e) => {
-    console.log(e);
-  });
 
   return (
     <>
@@ -101,14 +85,18 @@ export const Page = () => {
               <IconControl className="icon-control" text="Add cover">
                 <ImageIcon />
               </IconControl>
-              <div onClick={onHandleAddComment}>
+              <div onClick={() => setVisibleInputComment(true)}>
                 <IconControl className="icon-control" text="Add comment">
                   <MessageIcon />
                 </IconControl>
               </div>
             </StyledControlsBlock>
           </StyledBoxIcons>
-          <CommentsSection comments={page.comments} onResolveComment={onResolveComment} />
+          <CommentsSection
+            comments={page.comments}
+            optionText="Resolve"
+            onOptionClick={onResolveComment}
+          />
           {visibleInputComment && (
             <>
               <InputPageComment
@@ -120,11 +108,19 @@ export const Page = () => {
             </>
           )}
           {countResolvedComments !== 0 && (
-            <StyledCountResolvedComments onClick={openContextMenu}>
+            <StyledCountResolvedComments
+              onClick={(event) => openModal([`${event.pageX}px`, `${event.pageY}px`])}
+            >
               <CheckIcon className="check-count-icon" />
               <div>{countResolvedComments} resolved comment</div>
             </StyledCountResolvedComments>
           )}
+          <ModalResolvedComments
+            title={title}
+            position={position}
+            isOpenModal={isOpenModal}
+            comment={page.comments}
+          />
           <TitlePage pageTitle={page.title} />
         </Box>
       </StyledPage>

@@ -91,6 +91,29 @@ export const pagesSlice = createSlice({
         }),
       };
     },
+    reopenComment: (state, action: PayloadAction<{ pageId: string; commentId: string }>) => {
+      return {
+        ...state,
+        pages: state.pages.map((page) => {
+          if (page.id === action.payload.pageId) {
+            return {
+              ...page,
+              comments: page.comments.map((comment) => {
+                if (comment.id === action.payload.commentId) {
+                  return {
+                    ...comment,
+                    resolved: false,
+                  };
+                }
+                return comment;
+              }),
+            };
+          }
+
+          return page;
+        }),
+      };
+    },
     addPageIcon: (state, action: PayloadAction<{ pageId: string; srcIcon: string }>) => {
       return {
         ...state,
@@ -108,5 +131,6 @@ export const pagesSlice = createSlice({
   },
 });
 
-export const { addPage, changeTitle, addComment, resolveComment, addPageIcon } = pagesSlice.actions;
+export const { addPage, changeTitle, addComment, resolveComment, reopenComment, addPageIcon } =
+  pagesSlice.actions;
 export const pagesReducer = pagesSlice.reducer;

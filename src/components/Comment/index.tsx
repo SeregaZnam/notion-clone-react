@@ -3,15 +3,22 @@ import { CommentModel } from "../../types/Comment.model";
 import { StyledComment, StyledCommentDate, StyledControlOptions } from "./Styles";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { Box } from "@mui/material";
+import { useModal } from "../../hooks/useModal";
+import { ModalOptionsComments } from "../ModalOptionsComments";
 
 interface Props {
   comment: CommentModel;
-  onResolveComment: (pageId: string, commentId: string) => void;
+  optionText: string;
+  onOptionClick: (pageId: string, commentId: string) => void;
 }
 
-export const Comment: FC<Props> = ({ comment, onResolveComment }) => {
+export const Comment: FC<Props> = ({ comment, optionText, onOptionClick }) => {
   const formatter = new Intl.RelativeTimeFormat("en-US", { numeric: "auto" });
-  const [commentDate, setCommentDate] = useState('Just now');
+  const [commentDate, setCommentDate] = useState("Just now");
+
+  const { title, position, isOpenModal, openModal } = useModal({
+    title: "commentOptions",
+  });
 
   setInterval(() => {
     const date = new Date(comment.date);
@@ -36,17 +43,19 @@ export const Comment: FC<Props> = ({ comment, onResolveComment }) => {
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <StyledCommentDate>{commentDate}</StyledCommentDate>
         <StyledControlOptions>
-          <div
-            className="resolve-option"
-            onClick={() => onResolveComment(comment.pageId, comment.id)}
-          >
-            Resolve
+          <div className="resolve-option" onClick={() => onOptionClick(comment.pageId, comment.id)}>
+            {optionText}
           </div>
-          <MoreHorizIcon className="more-option-icon" />
+          <MoreHorizIcon
+            className="more-option-icon"
+            onClick={(event) => openModal([`${event.pageX - 180}px`, `${event.pageY}px`])}
+          />
         </StyledControlOptions>
       </Box>
       <div>{comment.text}</div>
-      <img src={comment.imageBlob as unknown as string} alt="" />
+      <img src={comment.imageBlob as unknown as string} />
+
+      <ModalOptionsComments title={title} position={position} isOpenModal={isOpenModal} />
     </StyledComment>
   );
 };
