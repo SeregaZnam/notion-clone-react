@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledInput = styled.input`
   font-size: 40px;
@@ -6,6 +6,7 @@ export const StyledInput = styled.input`
   color: rgb(55, 53, 47);
   outline: none;
   border: none;
+  margin-bottom: 20px;
 
   ::placeholder {
     opacity: 0.2;

@@ -1,34 +1,37 @@
 import React, { FC } from "react";
 import { Comment } from "../Comment";
-import { CommentModel } from "../../types/Comment.model";
+import { useAppSelector } from "../../store/hooks";
 
 interface Props {
-  comments: CommentModel[];
+  pageId: string;
   showResolvedComment?: boolean;
   optionText: string;
   onOptionClick: (pageId: string, commentId: string) => void;
 }
 
 export const CommentsSection: FC<Props> = ({
-  comments,
+  pageId,
   showResolvedComment = false,
   optionText,
   onOptionClick,
 }) => {
-  if (comments.length === 0) {
+  const comments = useAppSelector((state) => state.pagesComments.pagesComments);
+  const currentPageComments = comments.filter((comment) => comment.pageId === pageId);
+
+  if (currentPageComments.length === 0) {
     return null;
   }
 
   return (
     <>
-      {comments.map((comment) => {
+      {currentPageComments.map((comment) => {
         if (showResolvedComment === comment.resolved) {
           return (
             <Comment
               comment={comment}
               key={comment.id}
               optionText={optionText}
-              onOptionClick={onOptionClick}
+              onOptionClick={() => onOptionClick(pageId, comment.id)}
             />
           );
         }

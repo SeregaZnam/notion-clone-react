@@ -6,9 +6,8 @@ import { Box } from "@mui/material";
 import { useModal } from "../../hooks/useModal";
 import { ModalOptionsComments } from "../ModalOptionsComments";
 import { useAppDispatch } from "../../store/hooks";
-import { removeComment } from "../../store/pagesSlice";
 import { ModalEditorComment } from "../ModalEditorComment";
-import { InputPageComment } from "../InputPageComment";
+import { fetchRemovePageComment } from "../../store/pagesCommentsThunks";
 
 interface Props {
   comment: CommentModel;
@@ -53,7 +52,7 @@ export const Comment: FC<Props> = ({ comment, optionText, onOptionClick }) => {
   }, 60000);
 
   const deleteComment = () => {
-    dispatch(removeComment({ pageId: comment.pageId, commentId: comment.id }));
+    dispatch(fetchRemovePageComment({ id: comment.id }));
   };
 
   return (

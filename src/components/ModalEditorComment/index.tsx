@@ -3,7 +3,7 @@ import { useModal } from "../../hooks/useModal";
 import { Modal, PositionModel } from "../../shared/components/Modal";
 import { InputPageComment } from "../InputPageComment";
 import { StyledHorizontalLine } from "../Page/Styles";
-import { addComment, changeComment } from "../../store/pagesSlice";
+import { changeComment } from "../../store/pagesSlice";
 import { useAppDispatch } from "../../store/hooks";
 import { CommentModel } from "../../types/Comment.model";
 import styled from "styled-components";

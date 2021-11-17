@@ -5,8 +5,10 @@ import App from "./App";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 import { fetchPosts } from "./store/postSliceThunks";
+import { fetchPages } from "./store/pageSliceThunks";
 
-store.dispatch(fetchPosts());
+// store.dispatch(fetchPosts());
+store.dispatch(fetchPages());
 
 ReactDOM.render(
   <React.StrictMode>
@@ -14,5 +16,5 @@ ReactDOM.render(
       <App />
     </Provider>
   </React.StrictMode>,
-  document.getElementById("root")
+  document.getElementById("root"),
 );

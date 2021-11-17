@@ -1,24 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { Link, useHistory, useParams, useLocation, useRouteMatch } from "react-router-dom";
-import AddIcon from "@mui/icons-material/Add";
+import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { StyledNavbar, StyledUlList } from "./Styles";
 import { ListItem } from "../ListItem";
 import { NavbarButton } from "../NavbarButton";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { addPage } from "../../store/pagesSlice";
+import { fetchAddPage } from "../../store/pageSliceThunks";
 
 export const Navbar = () => {
-  const pages = useAppSelector((state) => state.pages.pages);
   const history = useHistory();
   const dispatch = useAppDispatch();
-
-  const createNewPage = () => {
-    dispatch(addPage());
-  };
+  const pages = useAppSelector((state) => state.pages.pages);
+  const currentPage = pages.find((page) => page.id === history.location.pathname);
 
   useEffect(() => {
-    if (pages.length !== 0) {
-      const createdPage = pages[pages.length - 1];
+    if (pages.length !== 0 && !!currentPage) {
+      const createdPage = pages[0];
 
       history.push({
         pathname: createdPage.id,
@@ -38,7 +34,7 @@ export const Navbar = () => {
             defaultTitle="Untitled"
           />
         ))}
-        <NavbarButton handleClick={createNewPage} />
+        <NavbarButton handleClick={() => dispatch(fetchAddPage())} />
       </StyledUlList>
     </StyledNavbar>
   );

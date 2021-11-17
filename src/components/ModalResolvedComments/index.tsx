@@ -1,29 +1,28 @@
 import React, { FC } from "react";
 import { CommentsSection } from "../CommentsSection";
 import { Modal, PositionModel } from "../../shared/components/Modal";
-import { reopenComment } from "../../store/pagesSlice";
-import { CommentModel } from "../../types/Comment.model";
 import { useAppDispatch } from "../../store/hooks";
 import { StyledModalContainer } from "./Styles";
+import { fetchResolveChangePageComment } from "../../store/pagesCommentsThunks";
 
 interface Props {
+  pageId: string;
   title: string;
   position: PositionModel;
   isOpenModal: boolean;
-  comment: CommentModel[];
 }
 
-export const ModalResolvedComments: FC<Props> = ({ title, position, isOpenModal, comment }) => {
+export const ModalResolvedComments: FC<Props> = ({ pageId, title, position, isOpenModal }) => {
   const dispatch = useAppDispatch();
-  const onReopenComment = (pageId: string, commentId: string) => {
-    dispatch(reopenComment({ pageId, commentId }));
+  const onReopenComment = (commentId: string) => {
+    dispatch(fetchResolveChangePageComment({ id: commentId }));
   };
 
   return (
     <Modal title={title} isOpen={isOpenModal} position={position}>
       <StyledModalContainer>
         <CommentsSection
-          comments={comment}
+          pageId={pageId}
           showResolvedComment={true}
           optionText="Re-open"
           onOptionClick={onReopenComment}

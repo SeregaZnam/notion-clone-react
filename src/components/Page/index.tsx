@@ -4,7 +4,6 @@ import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import {
   StyledBoxIcons,
   StyledControlsBlock,
-  StyledCountResolvedComments,
   StyledHorizontalLine,
   StyledPage,
   StyledPageIcon,
@@ -17,42 +16,37 @@ import { useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { useEffect, useState } from "react";
 import { InputPageComment } from "../InputPageComment";
-import { addComment, addPageIcon, resolveComment } from "../../store/pagesSlice";
-import { useHistory } from "react-router-dom";
+import { resolveComment } from "../../store/pagesSlice";
 import { CommentsSection } from "../CommentsSection";
-import CheckIcon from "@mui/icons-material/Check";
-import { useModal } from "../../hooks/useModal";
-import { ModalResolvedComments } from "../ModalResolvedComments";
-import { ModalOptionsComments } from "../ModalOptionsComments";
+import { TextSection } from "../../shared/components/TextSection";
+import { fetchChangePage } from "../../store/pageSliceThunks";
+import { CountResolvedComments } from "../CountResolvedComments";
+import { fetchAddPageComment, fetchPageComments } from "../../store/pagesCommentsThunks";
 
 export const Page = () => {
   const { id } = useParams<{ id: string }>();
-  const { title, position, isOpenModal, openModal } = useModal({
-    title: "commentResolved",
-  });
+
   const [fileBlob, setFileBlob] = useState(null);
   const [visibleInputComment, setVisibleInputComment] = useState(false);
   const dispatch = useAppDispatch();
-  const history = useHistory();
   const page = useAppSelector((state) => state.pages.pages.find((page) => page.id === id));
 
   useEffect(() => {
-    setVisibleInputComment(false);
+    dispatch(fetchPageComments({ id }));
   }, [id]);
 
   if (!page) {
-    history.push("/");
     return null;
   }
 
   const onAddComment = (text): void => {
-    dispatch(addComment({ text, pageId: id, imageBlob: fileBlob }));
+    dispatch(fetchAddPageComment({ text, pageId: id, imageBlob: fileBlob }));
   };
 
   const onHandleAddIcon = () => {
     dispatch(
-      addPageIcon({
-        pageId: page.id,
+      fetchChangePage({
+        ...page,
         srcIcon: "https://notion-emojis.s3-us-west-2.amazonaws.com/v0/svg-twitter/1f4e7.svg",
       }),
     );
@@ -61,10 +55,6 @@ export const Page = () => {
   const onResolveComment = (pageId: string, commentId: string) => {
     dispatch(resolveComment({ pageId, commentId }));
   };
-
-  const countResolvedComments = page.comments.reduce((count, comment) => {
-    return comment.resolved ? count + 1 : count;
-  }, 0);
 
   return (
     <>
@@ -92,11 +82,8 @@ export const Page = () => {
               </div>
             </StyledControlsBlock>
           </StyledBoxIcons>
-          <CommentsSection
-            comments={page.comments}
-            optionText="Resolve"
-            onOptionClick={onResolveComment}
-          />
+          <TitlePage page={page} />
+          <CommentsSection pageId={page.id} optionText="Resolve" onOptionClick={onResolveComment} />
           {visibleInputComment && (
             <>
               <InputPageComment
@@ -107,21 +94,10 @@ export const Page = () => {
               <StyledHorizontalLine />
             </>
           )}
-          {countResolvedComments !== 0 && (
-            <StyledCountResolvedComments
-              onClick={(event) => openModal([`${event.pageX}px`, `${event.pageY}px`])}
-            >
-              <CheckIcon className="check-count-icon" />
-              <div>{countResolvedComments} resolved comment</div>
-            </StyledCountResolvedComments>
-          )}
-          <ModalResolvedComments
-            title={title}
-            position={position}
-            isOpenModal={isOpenModal}
-            comment={page.comments}
-          />
-          <TitlePage pageTitle={page.title} />
+          <CountResolvedComments pageId={page.id} />
+
+          <TextSection />
+          <TextSection />
         </Box>
       </StyledPage>
     </>

@@ -4,7 +4,6 @@ import { Navbar } from "./components/Navbar";
 import styled from "styled-components";
 import { NormalizedStyles } from "./ResetStyles";
 import { BaseStyles } from "./BaseStyles";
-import { Modal } from "./shared/components/Modal";
 
 const StyledMain = styled.main`
   position: relative;
