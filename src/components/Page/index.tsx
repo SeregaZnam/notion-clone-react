@@ -20,11 +20,7 @@ import { CommentsSection } from "../CommentsSection";
 import { TextSection } from "../../shared/components/TextSection";
 import { fetchChangePage } from "../../store/pageSliceThunks";
 import { CountResolvedComments } from "../CountResolvedComments";
-import {
-  fetchAddComment,
-  fetchChangeComment,
-  fetchComments,
-} from "../../store/pagesCommentsThunks";
+import { fetchAddComment, fetchChangeComment, fetchComments } from "../../store/commentsThunks";
 
 export const Page = () => {
   const { id } = useParams<{ id: string }>();
@@ -50,12 +46,16 @@ export const Page = () => {
     dispatch(
       fetchChangePage({
         ...page,
-        srcIcon: "https://notion-emojis.s3-us-west-2.amazonaws.com/v0/svg-twitter/1f4e7.svg",
+        iconClass: `icon-${getRandomInt(400)}`,
       }),
     );
   };
 
-  const onResolveComment = (pageId: string, commentId: string) => {
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * (max - 2)) + 1;
+  }
+
+  const onResolveComment = (commentId: string) => {
     dispatch(fetchChangeComment({ id: commentId, resolved: true }));
   };
 
@@ -68,7 +68,15 @@ export const Page = () => {
         </StyledTopMenu>
         <Box sx={{ padding: "0 96px" }}>
           <StyledBoxIcons>
-            {page.srcIcon && <StyledPageIcon src={page.srcIcon} />}
+            {page.iconSrc ? (
+              <div className="page-icon-container">
+                <StyledPageIcon src={page.iconSrc} />
+              </div>
+            ) : (
+              <div className="page-icon-container">
+                <i className={page.iconClass}></i>
+              </div>
+            )}
             <StyledControlsBlock>
               <div onClick={onHandleAddIcon}>
                 <IconControl className="icon-control" text="Add icon">
@@ -99,7 +107,6 @@ export const Page = () => {
           )}
           <CountResolvedComments pageId={page.id} />
 
-          <TextSection />
           <TextSection />
         </Box>
       </StyledPage>

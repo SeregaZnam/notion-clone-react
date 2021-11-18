@@ -5,7 +5,7 @@ import {
   fetchComments,
   fetchRemoveComment,
   fetchAddComment,
-} from "./pagesCommentsThunks";
+} from "./commentsThunks";
 
 interface CommentState {
   comments: CommentModel[];
@@ -42,4 +42,4 @@ export const commentSlice = createSlice({
   },
 });
 
-export const pagesCommentsReducer = commentSlice.reducer;
+export const commentsReducer = commentSlice.reducer;

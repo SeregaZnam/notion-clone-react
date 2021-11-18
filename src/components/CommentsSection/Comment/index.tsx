@@ -1,13 +1,13 @@
 import React, { FC, useState } from "react";
-import { CommentModel } from "../../types/Comment.model";
+import { CommentModel } from "../../../types/Comment.model";
 import { StyledComment, StyledCommentDate, StyledControlOptions } from "./Styles";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { Box } from "@mui/material";
-import { useModal } from "../../hooks/useModal";
-import { ModalOptionsComments } from "../ModalOptionsComments";
-import { useAppDispatch } from "../../store/hooks";
-import { ModalEditorComment } from "../ModalEditorComment";
-import { fetchRemoveComment } from "../../store/pagesCommentsThunks";
+import { useModal } from "../../../hooks/useModal";
+import { ModalOptionsComments } from "../../ModalOptionsComments";
+import { useAppDispatch } from "../../../store/hooks";
+import { ModalEditorComment } from "../../ModalEditorComment";
+import { fetchRemoveComment } from "../../../store/commentsThunks";
 
 interface Props {
   comment: CommentModel;

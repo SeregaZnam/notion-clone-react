@@ -9,7 +9,7 @@ export const CountResolvedComments: FC<{ pageId: string }> = ({ pageId }) => {
   const { title, position, isOpenModal, openModal } = useModal({
     title: "commentResolved",
   });
-  const comments = useAppSelector((state) => state.pagesComments.comments);
+  const comments = useAppSelector((state) => state.comments.comments);
   const currentPageComments = comments.filter((comment) => comment.pageId === pageId);
   const countResolvedComments = currentPageComments.reduce((count, comment) => {
     return comment.resolved ? count + 1 : count;

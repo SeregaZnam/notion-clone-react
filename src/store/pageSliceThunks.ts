@@ -13,7 +13,8 @@ export const fetchAddPage = createAsyncThunk("pages/fetchAddPage", async () => {
   const newPageData: Omit<PageModel, "comments"> = {
     id: uuidv4(),
     title: "",
-    srcIcon: "",
+    iconSrc: "",
+    iconClass: "",
   };
   const response = await NotionApi.Pages.addPage(newPageData);
 
@@ -28,4 +29,3 @@ export const fetchChangePage = createAsyncThunk(
     return await response.json();
   },
 );
-

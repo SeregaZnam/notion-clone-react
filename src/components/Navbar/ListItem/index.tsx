@@ -1,28 +1,48 @@
 import React, { FC } from "react";
 import {
-  StyledArrowRightIcon,
   StyledControlBlock,
   StyledControlPointIcon,
   StyledLiItem,
   StyledLink,
   StyledMoreHorizIcon,
-  StyledPageIcon,
+  StyledPageIconDiv,
+  StyledPageIconImg,
+  StylesIconContainer,
 } from "./Styles";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 
 interface Props {
   title: string;
-  srcIcon: string;
   linkId: string;
+  iconSrc: string;
+  iconClass: string;
   defaultTitle?: string;
 }
 
-export const ListItem: FC<Props> = ({ title, srcIcon, linkId, defaultTitle = "" }) => {
+export const ListItem: FC<Props> = ({ title, iconSrc, iconClass, linkId, defaultTitle = "" }) => {
+  let icon = null;
+
+  if (iconSrc) {
+    icon = (
+      <StylesIconContainer>
+        <StyledPageIconImg src={iconSrc} />
+      </StylesIconContainer>
+    );
+  } else if (iconClass) {
+    icon = (
+      <StylesIconContainer>
+        <StyledPageIconDiv className={iconClass} />
+      </StylesIconContainer>
+    );
+  }
+
   return (
     <StyledLink to={`/${linkId}`} activeClassName="selected">
       <StyledLiItem>
         <div className="item-info">
-          <StyledArrowRightIcon />
-          <StyledPageIcon src={srcIcon} />
+          <ArrowRightIcon />
+          <></>
+          {icon}
           <span className="item-info-text">{title || defaultTitle}</span>
         </div>
         <StyledControlBlock>

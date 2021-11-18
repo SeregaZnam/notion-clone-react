@@ -46,7 +46,8 @@ export const Navbar = () => {
             key={page.id}
             title={page.title}
             linkId={page.id}
-            srcIcon={page.srcIcon}
+            iconSrc={page.iconSrc}
+            iconClass={page.iconClass}
             defaultTitle="Untitled"
           />
         ))}

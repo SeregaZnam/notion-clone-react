@@ -3,7 +3,7 @@ import { CommentsSection } from "../CommentsSection";
 import { Modal, PositionModel } from "../../shared/components/Modal";
 import { useAppDispatch } from "../../store/hooks";
 import { StyledModalContainer } from "./Styles";
-import { fetchChangeComment } from "../../store/pagesCommentsThunks";
+import { fetchChangeComment } from "../../store/commentsThunks";
 
 interface Props {
   pageId: string;
@@ -15,7 +15,7 @@ interface Props {
 export const ModalResolvedComments: FC<Props> = ({ pageId, title, position, isOpenModal }) => {
   const dispatch = useAppDispatch();
   const onReopenComment = (commentId: string) => {
-    dispatch(fetchChangeComment({ id: commentId,  }));
+    dispatch(fetchChangeComment({ id: commentId, resolved: false }));
   };
 
   return (

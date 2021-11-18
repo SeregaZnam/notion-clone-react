@@ -10,13 +10,21 @@ export const StyledTopMenu = styled.div`
   display: flex;
   height: 45px;
   width: 100%;
-  padding: 0 10px 0 12px;
-  box-sizing: border-box;
 `;
 
 export const StyledBoxIcons = styled.div`
   padding: 80px 0 4px 1px;
   transition: all 1s ease-in-out;
+
+  .page-icon-container {
+    border-radius: 3px;
+    transition: all 0.1s ease-in-out;
+
+    :hover {
+      cursor: pointer;
+      background: rgba(55, 53, 47, 0.08);
+    }
+  }
 `;
 
 export const StyledPageIcon = styled.img`
@@ -58,4 +66,3 @@ export const StyledHorizontalLine = styled.div`
   background: rgba(55, 53, 47, 0.09);
   margin-bottom: 8px;
 `;
-

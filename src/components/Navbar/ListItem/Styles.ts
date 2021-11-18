@@ -33,18 +33,31 @@ export const StyledLiItem = styled.li`
   .item-info {
     display: flex;
     align-items: center;
+
+    .item-info-text {
+      margin-left: 8px;
+    }
   }
 `;
 
-export const StyledPageIcon = styled.img`
-  display: ${(props) => (props.src ? "block" : "none")};
-  width: 14px;
-  height: 14px;
-  margin-right: 10px;
+export const StylesIconContainer = styled.div`
+  width: 20px;
+  height: 20px;
 `;
 
-export const StyledArrowRightIcon = styled(ArrowRightIcon)`
-  margin-right: 8px;
+export const StyledPageIconImg = styled.img`
+  display: ${(props) => (props.src || props.className ? "block" : "none")};
+
+  margin-right: 10px;
+  width: 14px;
+  height: 14px;
+`;
+
+export const StyledPageIconDiv = styled.div`
+  transform: scale(0.3);
+  transform-origin: left top;
+  width: 14px;
+  height: 14px;
 `;
 
 export const StyledMoreHorizIcon = styled(MoreHorizIcon)`

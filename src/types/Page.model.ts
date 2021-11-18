@@ -1,5 +1,6 @@
 export interface PageModel {
   id: string;
   title: string;
-  srcIcon: string;
+  iconSrc: string;
+  iconClass: string;
 }

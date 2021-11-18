@@ -39,7 +39,7 @@ export namespace NotionApi {
     export function getPageComments(pageId: string) {
       const namePropertyPageId: keyof Pick<CommentModel, "pageId"> = "pageId";
 
-      return fetch(`${baseUrl}/pagesComments?${namePropertyPageId}=${pageId}`, {
+      return fetch(`${baseUrl}/comments?${namePropertyPageId}=${pageId}`, {
         method: "GET",
       });
     }
@@ -47,7 +47,7 @@ export namespace NotionApi {
     export function addPageComment(commentData: CommentModel): Promise<Response> {
       const newPageComment = JSON.stringify(commentData);
 
-      return fetch(`${baseUrl}/pagesComments`, {
+      return fetch(`${baseUrl}/comments`, {
         headers,
         method: "POST",
         body: newPageComment,
@@ -55,7 +55,7 @@ export namespace NotionApi {
     }
 
     export function removePageComment(commentId: string): Promise<Response> {
-      return fetch(`${baseUrl}/pagesComments/${commentId}`, {
+      return fetch(`${baseUrl}/comments/${commentId}`, {
         method: "DELETE",
       });
     }
@@ -63,7 +63,7 @@ export namespace NotionApi {
     export function changePageComment(comment: CommentModel): Promise<Response> {
       const updatedComment = JSON.stringify(comment);
 
-      return fetch(`${baseUrl}/pagesComments/${comment.id}`, {
+      return fetch(`${baseUrl}/comments/${comment.id}`, {
         headers,
         method: "PUT",
         body: updatedComment,

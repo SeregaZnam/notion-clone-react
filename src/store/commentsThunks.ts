@@ -44,7 +44,7 @@ export const fetchChangeComment = createAsyncThunk(
   "comments/fetchChangePageComment",
   async (data: Pick<CommentModel, "id"> & Partial<Omit<CommentModel, "id">>, { getState }) => {
     const state = getState() as RootState;
-    const comments = state.pagesComments.comments;
+    const comments = state.comments.comments;
     const currentPageComments = comments.find((comment) => comment.id === data.id);
 
     const response = await NotionApi.Comments.changePageComment({

@@ -1,13 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { postsReducer } from "./postsSlice";
 import { pagesReducer } from "./pagesSlice";
-import { pagesCommentsReducer } from "./commentSlice";
+import { commentsReducer } from "./commentSlice";
 
 export const store = configureStore({
   reducer: {
     posts: postsReducer,
     pages: pagesReducer,
-    pagesComments: pagesCommentsReducer,
+    comments: commentsReducer,
   },
 });
 
