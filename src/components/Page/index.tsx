@@ -16,12 +16,15 @@ import { useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { useEffect, useState } from "react";
 import { InputPageComment } from "../InputPageComment";
-import { resolveComment } from "../../store/pagesSlice";
 import { CommentsSection } from "../CommentsSection";
 import { TextSection } from "../../shared/components/TextSection";
 import { fetchChangePage } from "../../store/pageSliceThunks";
 import { CountResolvedComments } from "../CountResolvedComments";
-import { fetchAddPageComment, fetchPageComments } from "../../store/pagesCommentsThunks";
+import {
+  fetchAddComment,
+  fetchChangeComment,
+  fetchComments,
+} from "../../store/pagesCommentsThunks";
 
 export const Page = () => {
   const { id } = useParams<{ id: string }>();
@@ -32,7 +35,7 @@ export const Page = () => {
   const page = useAppSelector((state) => state.pages.pages.find((page) => page.id === id));
 
   useEffect(() => {
-    dispatch(fetchPageComments({ id }));
+    dispatch(fetchComments({ id }));
   }, [id]);
 
   if (!page) {
@@ -40,7 +43,7 @@ export const Page = () => {
   }
 
   const onAddComment = (text): void => {
-    dispatch(fetchAddPageComment({ text, pageId: id, imageBlob: fileBlob }));
+    dispatch(fetchAddComment({ text, pageId: id, imageBlob: fileBlob }));
   };
 
   const onHandleAddIcon = () => {
@@ -53,7 +56,7 @@ export const Page = () => {
   };
 
   const onResolveComment = (pageId: string, commentId: string) => {
-    dispatch(resolveComment({ pageId, commentId }));
+    dispatch(fetchChangeComment({ id: commentId, resolved: true }));
   };
 
   return (

@@ -8,24 +8,23 @@ import {
   StyledMoreHorizIcon,
   StyledPageIcon,
 } from "./Styles";
-import { Box } from "@mui/system";
 
 interface Props {
   title: string;
-  defaultTitle?: string;
   srcIcon: string;
   linkId: string;
+  defaultTitle?: string;
 }
 
-export const ListItem: FC<Props> = ({ title, defaultTitle = "", srcIcon, linkId }) => {
+export const ListItem: FC<Props> = ({ title, srcIcon, linkId, defaultTitle = "" }) => {
   return (
-    <StyledLink to={`/${linkId}`}>
+    <StyledLink to={`/${linkId}`} activeClassName="selected">
       <StyledLiItem>
-        <Box sx={{ display: "flex", alignItems: "center" }}>
+        <div className="item-info">
           <StyledArrowRightIcon />
-          {srcIcon && <StyledPageIcon src={srcIcon} />}
-          {title || defaultTitle}
-        </Box>
+          <StyledPageIcon src={srcIcon} />
+          <span className="item-info-text">{title || defaultTitle}</span>
+        </div>
         <StyledControlBlock>
           <StyledMoreHorizIcon />
           <StyledControlPointIcon />

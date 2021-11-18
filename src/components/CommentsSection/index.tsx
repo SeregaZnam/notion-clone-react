@@ -15,7 +15,7 @@ export const CommentsSection: FC<Props> = ({
   optionText,
   onOptionClick,
 }) => {
-  const comments = useAppSelector((state) => state.pagesComments.pagesComments);
+  const comments = useAppSelector((state) => state.pagesComments.comments);
   const currentPageComments = comments.filter((comment) => comment.pageId === pageId);
 
   if (currentPageComments.length === 0) {

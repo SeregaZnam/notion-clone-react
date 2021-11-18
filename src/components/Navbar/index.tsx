@@ -1,10 +1,14 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { StyledNavbar, StyledUlList } from "./Styles";
-import { ListItem } from "../ListItem";
+import { StyledAddIcon, StyledBottomNewPage, StyledNavbar, StyledUlList } from "./Styles";
+import { ListItem } from "./ListItem";
 import { NavbarButton } from "../NavbarButton";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { fetchAddPage } from "../../store/pageSliceThunks";
+import SettingsIcon from "@mui/icons-material/Settings";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import SearchIcon from "@mui/icons-material/Search";
+import { ListItemOption } from "./ListItemOption";
 
 export const Navbar = () => {
   const history = useHistory();
@@ -25,6 +29,18 @@ export const Navbar = () => {
   return (
     <StyledNavbar>
       <StyledUlList>
+        <ListItemOption text="Quick Find">
+          <SearchIcon />
+        </ListItemOption>
+        <ListItemOption text="All Updates">
+          <AccessTimeIcon />
+        </ListItemOption>
+        <ListItemOption text="Settings & Members">
+          <SettingsIcon />
+        </ListItemOption>
+      </StyledUlList>
+
+      <StyledUlList>
         {pages.map((page) => (
           <ListItem
             key={page.id}
@@ -36,6 +52,11 @@ export const Navbar = () => {
         ))}
         <NavbarButton handleClick={() => dispatch(fetchAddPage())} />
       </StyledUlList>
+
+      <StyledBottomNewPage>
+        <StyledAddIcon />
+        <span>New page</span>
+      </StyledBottomNewPage>
     </StyledNavbar>
   );
 };

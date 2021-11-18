@@ -65,7 +65,7 @@ export namespace NotionApi {
 
       return fetch(`${baseUrl}/pagesComments/${comment.id}`, {
         headers,
-        method: "UPDATE",
+        method: "PUT",
         body: updatedComment,
       });
     }

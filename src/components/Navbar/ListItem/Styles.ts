@@ -1,15 +1,22 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 
-export const StyledLiItem = styled.li`
-  display: flex;
-  justify-content: space-between;
-  padding: 2px 14px;
-  height: 22px;
+export const StyledLink = styled(NavLink)`
+  display: block;
+  text-decoration: none;
+  color: rgba(25, 23, 17, 0.6);
   transition: all 0.1s;
+
+  &.selected {
+    background-color: rgba(55, 53, 47, 0.08);
+
+    .item-info-text {
+      color: black;
+    }
+  }
 
   :hover {
     background-color: rgba(55, 53, 47, 0.08);
@@ -17,7 +24,20 @@ export const StyledLiItem = styled.li`
   }
 `;
 
+export const StyledLiItem = styled.li`
+  display: flex;
+  justify-content: space-between;
+  padding: 2px 14px;
+  height: 22px;
+
+  .item-info {
+    display: flex;
+    align-items: center;
+  }
+`;
+
 export const StyledPageIcon = styled.img`
+  display: ${(props) => (props.src ? "block" : "none")};
   width: 14px;
   height: 14px;
   margin-right: 10px;
@@ -25,11 +45,6 @@ export const StyledPageIcon = styled.img`
 
 export const StyledArrowRightIcon = styled(ArrowRightIcon)`
   margin-right: 8px;
-`;
-
-export const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: black;
 `;
 
 export const StyledMoreHorizIcon = styled(MoreHorizIcon)`

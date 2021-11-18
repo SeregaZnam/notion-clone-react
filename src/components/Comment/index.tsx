@@ -7,7 +7,7 @@ import { useModal } from "../../hooks/useModal";
 import { ModalOptionsComments } from "../ModalOptionsComments";
 import { useAppDispatch } from "../../store/hooks";
 import { ModalEditorComment } from "../ModalEditorComment";
-import { fetchRemovePageComment } from "../../store/pagesCommentsThunks";
+import { fetchRemoveComment } from "../../store/pagesCommentsThunks";
 
 interface Props {
   comment: CommentModel;
@@ -52,7 +52,7 @@ export const Comment: FC<Props> = ({ comment, optionText, onOptionClick }) => {
   }, 60000);
 
   const deleteComment = () => {
-    dispatch(fetchRemovePageComment({ id: comment.id }));
+    dispatch(fetchRemoveComment({ id: comment.id }));
   };
 
   return (

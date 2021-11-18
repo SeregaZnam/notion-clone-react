@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { PageModel } from "../types/Page.model";
 import { fetchAddPage, fetchChangePage, fetchPages } from "./pageSliceThunks";
 
@@ -13,51 +13,7 @@ const initialState: PagesState = {
 export const pagesSlice = createSlice({
   name: "pages",
   initialState,
-  reducers: {
-    resolveComment: (state, action: PayloadAction<{ pageId: string; commentId: string }>) => {
-      return {
-        ...state,
-        pages: state.pages.map((page) => {
-          if (page.id === action.payload.pageId) {
-            return {
-              ...page,
-            };
-          }
-
-          return page;
-        }),
-      };
-    },
-    removeComment: (state, action: PayloadAction<{ pageId: string; commentId: string }>) => {
-      return {
-        ...state,
-        pages: state.pages.map((page) => {
-          if (page.id === action.payload.pageId) {
-            return {
-              ...page,
-            };
-          }
-
-          return page;
-        }),
-      };
-    },
-    changeComment: (state, action) => {},
-    addPageIcon: (state, action: PayloadAction<{ pageId: string; srcIcon: string }>) => {
-      return {
-        ...state,
-        pages: state.pages.map((page) => {
-          if (page.id === action.payload.pageId) {
-            return {
-              ...page,
-              srcIcon: action.payload.srcIcon,
-            };
-          }
-          return page;
-        }),
-      };
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder.addCase(fetchPages.fulfilled, (state, action) => {
       state.pages = [...state.pages, ...action.payload];
@@ -75,5 +31,4 @@ export const pagesSlice = createSlice({
   },
 });
 
-export const { resolveComment, removeComment, addPageIcon, changeComment } = pagesSlice.actions;
 export const pagesReducer = pagesSlice.reducer;

@@ -3,11 +3,11 @@ import { useModal } from "../../hooks/useModal";
 import { Modal, PositionModel } from "../../shared/components/Modal";
 import { InputPageComment } from "../InputPageComment";
 import { StyledHorizontalLine } from "../Page/Styles";
-import { changeComment } from "../../store/pagesSlice";
 import { useAppDispatch } from "../../store/hooks";
 import { CommentModel } from "../../types/Comment.model";
 import styled from "styled-components";
-import {StyledForm, StyledInputComment} from "../InputPageComment/Styles";
+import { StyledForm, StyledInputComment } from "../InputPageComment/Styles";
+import { fetchChangeComment } from "../../store/pagesCommentsThunks";
 
 interface Props {
   title: string;
@@ -29,7 +29,7 @@ export const ModalEditorComment: FC<Props> = ({ title, isOpenModal, position, co
   const onChangeComment = (text): void => {
     console.log(text);
     dispatch(
-      changeComment({ text, pageId: comment.pageId, commentId: comment.id, imageBlob: fileBlob }),
+      fetchChangeComment({ text, id: comment.id }),
     );
   };
 
