@@ -13,7 +13,7 @@ export const StyledTopMenu = styled.div`
 `;
 
 export const StyledBoxIcons = styled.div`
-  padding: 80px 0 4px 1px;
+  padding: 80px 96px 4px;
   transition: all 1s ease-in-out;
 
   .page-icon-container {

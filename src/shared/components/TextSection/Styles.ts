@@ -1,5 +1,17 @@
 import styled from "styled-components";
 
+export const StyledTextSectionContainer = styled.section`
+  position: relative;
+  padding: 0 96px;
+  transition: all 200ms;
+
+  .page-option {
+    position: absolute;
+    left: 45px;
+    top: 3px;
+  }
+`;
+
 export const StyledTextSection = styled.section`
   display: flex;
   background: rgb(241, 241, 239);

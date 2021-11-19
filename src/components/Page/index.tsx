@@ -20,7 +20,11 @@ import { CommentsSection } from "../CommentsSection";
 import { TextSection } from "../../shared/components/TextSection";
 import { fetchChangePage } from "../../store/page/pageSliceThunks";
 import { CountResolvedComments } from "../CountResolvedComments";
-import { fetchAddComment, fetchChangeComment, fetchComments } from "../../store/comment/commentsSliceThunks";
+import {
+  fetchAddComment,
+  fetchChangeComment,
+  fetchComments,
+} from "../../store/comment/commentsSliceThunks";
 import { usePrev } from "./usePrev";
 
 export const Page = () => {
@@ -71,7 +75,7 @@ export const Page = () => {
           <Box sx={{ width: "50%" }}>Untitled</Box>
           <Box sx={{ width: "50%" }}>Share</Box>
         </StyledTopMenu>
-        <Box sx={{ padding: "0 96px" }}>
+        <div>
           <StyledBoxIcons>
             {page.iconSrc ? (
               <div className="page-icon-container">
@@ -110,10 +114,12 @@ export const Page = () => {
               <StyledHorizontalLine />
             </>
           )}
-          <CountResolvedComments pageId={page.id} />
+          <div style={{ padding: "0 96px" }}>
+            <CountResolvedComments pageId={page.id} />
+          </div>
 
           <TextSection />
-        </Box>
+        </div>
       </StyledPage>
     </>
   );

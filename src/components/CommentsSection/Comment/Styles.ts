@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const StyledComment = styled.div`
-  padding: 6px 16px 6px 14px;
+  padding: 6px 112px 6px 110px;
 `;
 
 export const StyledCommentDate = styled.div`
