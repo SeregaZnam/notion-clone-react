@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { PostModel } from "../types/Post.model";
+import { PostModel } from "../../types/Post.model";
 import {
   fetchAddPost,
   fetchChangePost,

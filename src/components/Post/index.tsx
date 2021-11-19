@@ -1,7 +1,7 @@
 import { PostModel } from '../../types/Post.model';
 import React, { FC, SyntheticEvent, useState } from 'react';
 import { useAppDispatch } from '../../store/hooks';
-import { fetchChangePost, fetchRemovePost } from '../../store/postSliceThunks';
+import { fetchChangePost, fetchRemovePost } from '../../store/post/postSliceThunks';
 import { Avatar, Box, ListItem, ListItemAvatar, ListItemText, TextField } from '@mui/material';
 import {
   StyledCloseIcon,

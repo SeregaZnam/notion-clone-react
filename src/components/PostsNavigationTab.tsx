@@ -2,7 +2,7 @@ import React, { ChangeEvent, SyntheticEvent, useRef, useState } from 'react';
 import { Button, TextField } from '@mui/material';
 import { Posts } from './Posts';
 import { useAppDispatch } from '../store/hooks';
-import { fetchAddAudio, fetchAddPost } from '../store/postSliceThunks';
+import { fetchAddAudio, fetchAddPost } from '../store/post/postSliceThunks';
 import { InputFile } from './InputFile';
 import { InputAudio } from './InputAudio';
 

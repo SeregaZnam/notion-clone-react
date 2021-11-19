@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { PageModel } from "../types/Page.model";
+import { PageModel } from "../../types/Page.model";
 import { fetchAddPage, fetchChangePage, fetchPages } from "./pageSliceThunks";
 
 interface PagesState {

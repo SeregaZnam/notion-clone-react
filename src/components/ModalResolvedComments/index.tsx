@@ -1,9 +1,9 @@
-import React, { FC } from "react";
+import React, { FC, useCallback } from "react";
 import { CommentsSection } from "../CommentsSection";
 import { Modal, PositionModel } from "../../shared/components/Modal";
 import { useAppDispatch } from "../../store/hooks";
 import { StyledModalContainer } from "./Styles";
-import { fetchChangeComment } from "../../store/commentsThunks";
+import { fetchChangeComment } from "../../store/comment/commentsSliceThunks";
 
 interface Props {
   pageId: string;
@@ -14,9 +14,9 @@ interface Props {
 
 export const ModalResolvedComments: FC<Props> = ({ pageId, title, position, isOpenModal }) => {
   const dispatch = useAppDispatch();
-  const onReopenComment = (commentId: string) => {
+  const onReopenComment = useCallback((commentId: string) => {
     dispatch(fetchChangeComment({ id: commentId, resolved: false }));
-  };
+  }, []);
 
   return (
     <Modal title={title} isOpen={isOpenModal} position={position}>

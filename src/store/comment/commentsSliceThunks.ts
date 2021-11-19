@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { PageModel } from "../types/Page.model";
-import { NotionApi } from "../services/notionApi";
-import { CommentModel } from "../types/Comment.model";
+import { PageModel } from "../../types/Page.model";
+import { NotionApi } from "../../services/notionApi";
+import { CommentModel } from "../../types/Comment.model";
 import { v4 as uuidv4 } from "uuid";
-import { RootState } from "./store";
+import { RootState } from "../store";
 
 export const fetchComments = createAsyncThunk(
   "comments/fetchPageComments",
@@ -16,13 +16,13 @@ export const fetchComments = createAsyncThunk(
 
 export const fetchAddComment = createAsyncThunk(
   "comments/fetchAddPageComment",
-  async ({ pageId, text }: Pick<CommentModel, "pageId" | "text" | "imageBlob">) => {
+  async ({ pageId, text, imageBlob }: Pick<CommentModel, "pageId" | "text" | "imageBlob">) => {
     const comment: CommentModel = {
-      pageId,
       text,
+      pageId,
+      imageBlob,
       id: uuidv4(),
       resolved: false,
-      imageBlob: null,
       date: Date.now(),
     };
     const response = await NotionApi.Comments.addPageComment(comment);

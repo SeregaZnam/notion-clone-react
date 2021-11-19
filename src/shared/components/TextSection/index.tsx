@@ -1,7 +1,7 @@
-import React from "react";
+import React, { memo } from "react";
 import { StyledIcon, StyledTextContent, StyledTextSection } from "./Styles";
 
-export const TextSection = () => {
+export const TextSection = memo(() => {
   return (
     <>
       <StyledTextSection>
@@ -14,4 +14,4 @@ export const TextSection = () => {
       </StyledTextSection>
     </>
   );
-};
+});

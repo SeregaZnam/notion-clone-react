@@ -17,6 +17,7 @@ export const StyledBoxIcons = styled.div`
   transition: all 1s ease-in-out;
 
   .page-icon-container {
+    display: inline-block;
     border-radius: 3px;
     transition: all 0.1s ease-in-out;
 

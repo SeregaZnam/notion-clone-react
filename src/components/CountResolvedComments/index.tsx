@@ -1,11 +1,11 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import CheckIcon from "@mui/icons-material/Check";
 import { StyledCountResolvedComments } from "./Styles";
 import { useAppSelector } from "../../store/hooks";
 import { ModalResolvedComments } from "../ModalResolvedComments";
 import { useModal } from "../../hooks/useModal";
 
-export const CountResolvedComments: FC<{ pageId: string }> = ({ pageId }) => {
+export const CountResolvedComments: FC<{ pageId: string }> = memo(({ pageId }) => {
   const { title, position, isOpenModal, openModal } = useModal({
     title: "commentResolved",
   });
@@ -35,4 +35,4 @@ export const CountResolvedComments: FC<{ pageId: string }> = ({ pageId }) => {
       />
     </>
   );
-};
+});

@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { CommentModel } from "../types/Comment.model";
+import { CommentModel } from "../../types/Comment.model";
 import {
   fetchChangeComment,
   fetchComments,
   fetchRemoveComment,
   fetchAddComment,
-} from "./commentsThunks";
+} from "./commentsSliceThunks";
 
 interface CommentState {
   comments: CommentModel[];

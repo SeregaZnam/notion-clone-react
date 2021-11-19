@@ -14,13 +14,14 @@ import { IconControl } from "../IconControl";
 import { TitlePage } from "../TitlePage";
 import { useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { InputPageComment } from "../InputPageComment";
 import { CommentsSection } from "../CommentsSection";
 import { TextSection } from "../../shared/components/TextSection";
-import { fetchChangePage } from "../../store/pageSliceThunks";
+import { fetchChangePage } from "../../store/page/pageSliceThunks";
 import { CountResolvedComments } from "../CountResolvedComments";
-import { fetchAddComment, fetchChangeComment, fetchComments } from "../../store/commentsThunks";
+import { fetchAddComment, fetchChangeComment, fetchComments } from "../../store/comment/commentsSliceThunks";
+import { usePrev } from "./usePrev";
 
 export const Page = () => {
   const { id } = useParams<{ id: string }>();
@@ -30,6 +31,27 @@ export const Page = () => {
   const dispatch = useAppDispatch();
   const page = useAppSelector((state) => state.pages.pages.find((page) => page.id === id));
 
+  const onAddComment = (text): void => {
+    dispatch(fetchAddComment({ text, pageId: id, imageBlob: fileBlob }));
+  };
+
+  const onHandleAddIcon = () => {
+    dispatch(
+      fetchChangePage({
+        id: page.id,
+        iconClass: `icon-${getRandomInt(400)}`,
+      }),
+    );
+  };
+
+  const onResolveComment = useCallback((commentId: string) => {
+    dispatch(fetchChangeComment({ id: commentId, resolved: true }));
+  }, []);
+
+  // const prevFunc = usePrev(onResolveComment);
+  //
+  // console.log(onResolveComment === prevFunc);
+
   useEffect(() => {
     dispatch(fetchComments({ id }));
   }, [id]);
@@ -38,26 +60,9 @@ export const Page = () => {
     return null;
   }
 
-  const onAddComment = (text): void => {
-    dispatch(fetchAddComment({ text, pageId: id, imageBlob: fileBlob }));
-  };
-
-  const onHandleAddIcon = () => {
-    dispatch(
-      fetchChangePage({
-        ...page,
-        iconClass: `icon-${getRandomInt(400)}`,
-      }),
-    );
-  };
-
   function getRandomInt(max) {
     return Math.floor(Math.random() * (max - 2)) + 1;
   }
-
-  const onResolveComment = (commentId: string) => {
-    dispatch(fetchChangeComment({ id: commentId, resolved: true }));
-  };
 
   return (
     <>
@@ -93,7 +98,7 @@ export const Page = () => {
               </div>
             </StyledControlsBlock>
           </StyledBoxIcons>
-          <TitlePage page={page} />
+          <TitlePage pageId={page.id} title={page.title} />
           <CommentsSection pageId={page.id} optionText="Resolve" onOptionClick={onResolveComment} />
           {visibleInputComment && (
             <>

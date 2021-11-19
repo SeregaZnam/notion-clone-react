@@ -4,7 +4,7 @@ import { StyledAddIcon, StyledBottomNewPage, StyledNavbar, StyledUlList } from "
 import { ListItem } from "./ListItem";
 import { NavbarButton } from "../NavbarButton";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { fetchAddPage } from "../../store/pageSliceThunks";
+import { fetchAddPage } from "../../store/page/pageSliceThunks";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import SearchIcon from "@mui/icons-material/Search";

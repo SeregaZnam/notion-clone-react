@@ -1,21 +1,20 @@
-import React, { ChangeEvent, FC, useEffect, useState } from "react";
+import React, { ChangeEvent, FC, memo, useEffect, useState } from "react";
 import { useAppDispatch } from "../../store/hooks";
 import { StyledInput } from "./Styles";
-import { fetchChangePage } from "../../store/pageSliceThunks";
-import { PageModel } from "../../types/Page.model";
+import { fetchChangePage } from "../../store/page/pageSliceThunks";
 
-export const TitlePage: FC<{ page: PageModel }> = ({ page }) => {
-  const [title, setTitle] = useState(page.title);
+export const TitlePage: FC<{ pageId: string; title: string }> = memo(({ pageId, title }) => {
+  const [currentTitle, setCurrentTitle] = useState(title);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    setTitle(page.title);
-  }, [page.title]);
+    setCurrentTitle(title);
+  }, [title]);
 
   const onChangeTitle = (event: ChangeEvent<HTMLInputElement>): void => {
-    setTitle(event.target.value);
-    dispatch(fetchChangePage({ ...page, title: event.target.value }));
+    setCurrentTitle(event.target.value);
+    dispatch(fetchChangePage({ id: pageId, title: event.target.value }));
   };
 
-  return <StyledInput placeholder="Untitled" value={title} onChange={onChangeTitle} />;
-};
+  return <StyledInput placeholder="Untitled" value={currentTitle} onChange={onChangeTitle} />;
+});

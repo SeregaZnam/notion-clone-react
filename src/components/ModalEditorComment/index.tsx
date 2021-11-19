@@ -7,7 +7,7 @@ import { useAppDispatch } from "../../store/hooks";
 import { CommentModel } from "../../types/Comment.model";
 import styled from "styled-components";
 import { StyledForm, StyledInputComment } from "../InputPageComment/Styles";
-import { fetchChangeComment } from "../../store/commentsThunks";
+import { fetchChangeComment } from "../../store/comment/commentsSliceThunks";
 
 interface Props {
   title: string;

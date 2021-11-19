@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { postsReducer } from "./postsSlice";
-import { pagesReducer } from "./pagesSlice";
-import { commentsReducer } from "./commentSlice";
+import { postsReducer } from "./post/postsSlice";
+import { pagesReducer } from "./page/pagesSlice";
+import { commentsReducer } from "./comment/commentSlice";
 
 export const store = configureStore({
   reducer: {

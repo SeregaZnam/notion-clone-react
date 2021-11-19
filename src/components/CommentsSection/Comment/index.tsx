@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, memo, useCallback, useState } from "react";
 import { CommentModel } from "../../../types/Comment.model";
 import { StyledComment, StyledCommentDate, StyledControlOptions } from "./Styles";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
@@ -7,15 +7,16 @@ import { useModal } from "../../../hooks/useModal";
 import { ModalOptionsComments } from "../../ModalOptionsComments";
 import { useAppDispatch } from "../../../store/hooks";
 import { ModalEditorComment } from "../../ModalEditorComment";
-import { fetchRemoveComment } from "../../../store/commentsThunks";
+import { fetchRemoveComment } from "../../../store/comment/commentsSliceThunks";
 
 interface Props {
   comment: CommentModel;
   optionText: string;
-  onOptionClick: (pageId: string, commentId: string) => void;
+  onOptionClick: (commentId: string) => void;
 }
 
-export const Comment: FC<Props> = ({ comment, optionText, onOptionClick }) => {
+export const Comment: FC<Props> = memo(({ comment, optionText, onOptionClick }) => {
+  console.log("rerender");
   const formatter = new Intl.RelativeTimeFormat("en-US", { numeric: "auto" });
   const [commentDate, setCommentDate] = useState("Just now");
   const dispatch = useAppDispatch();
@@ -60,7 +61,7 @@ export const Comment: FC<Props> = ({ comment, optionText, onOptionClick }) => {
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <StyledCommentDate>{commentDate}</StyledCommentDate>
         <StyledControlOptions>
-          <div className="resolve-option" onClick={() => onOptionClick(comment.pageId, comment.id)}>
+          <div className="resolve-option" onClick={() => onOptionClick(comment.id)}>
             {optionText}
           </div>
           <MoreHorizIcon
@@ -91,4 +92,4 @@ export const Comment: FC<Props> = ({ comment, optionText, onOptionClick }) => {
       />
     </StyledComment>
   );
-};
+});

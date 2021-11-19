@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Api } from "../services/api";
-import { PostModel } from "../types/Post.model";
+import { Api } from "../../services/api";
+import { PostModel } from "../../types/Post.model";
 import { v4 as uuidv4 } from "uuid";
 
 export const fetchPosts = createAsyncThunk(
