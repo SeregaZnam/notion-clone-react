@@ -16,7 +16,6 @@ interface Props {
 }
 
 export const Comment: FC<Props> = memo(({ comment, optionText, onOptionClick }) => {
-  console.log("rerender");
   const formatter = new Intl.RelativeTimeFormat("en-US", { numeric: "auto" });
   const [commentDate, setCommentDate] = useState("Just now");
   const dispatch = useAppDispatch();

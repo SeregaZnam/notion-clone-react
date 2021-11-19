@@ -29,9 +29,10 @@ export const StyledLi = styled.li`
 
   &.option-learn-comment {
     color: rgba(55, 53, 47, 0.4);
+    font-size: 12px;
 
     .option-learn-comment-icon {
-      font-size: 14px;
+      font-size: 15px;
     }
 
     .options-text {
