@@ -16,6 +16,7 @@ export const fetchAddPage = createAsyncThunk("pages/fetchAddPage", async () => {
     title: "",
     iconSrc: "",
     iconClass: "",
+    coverSrc: "",
   };
   const response = await NotionApi.Pages.addPage(newPageData);
 

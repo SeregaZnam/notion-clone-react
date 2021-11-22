@@ -4,12 +4,11 @@ export const StyledPage = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-`;
 
-export const StyledTopMenu = styled.div`
-  display: flex;
-  height: 45px;
-  width: 100%;
+  .content-with-cover {
+    position: relative;
+    top: -114px;
+  }
 `;
 
 export const StyledBoxIcons = styled.div`

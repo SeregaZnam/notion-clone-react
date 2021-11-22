@@ -3,4 +3,5 @@ export interface PageModel {
   title: string;
   iconSrc: string;
   iconClass: string;
+  coverSrc: string;
 }

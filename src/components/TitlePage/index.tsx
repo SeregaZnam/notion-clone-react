@@ -16,5 +16,9 @@ export const TitlePage: FC<{ pageId: string; title: string }> = memo(({ pageId, 
     dispatch(fetchChangePage({ id: pageId, title: event.target.value }));
   };
 
-  return <StyledInput placeholder="Untitled" value={currentTitle} onChange={onChangeTitle} />;
+  return (
+    <div style={{ padding: "0 96px" }}>
+      <StyledInput placeholder="Untitled" value={currentTitle} onChange={onChangeTitle} />
+    </div>
+  );
 });

@@ -7,14 +7,12 @@ import {
   StyledHorizontalLine,
   StyledPage,
   StyledPageIcon,
-  StyledTopMenu,
 } from "./Styles";
-import { Box } from "@mui/material";
 import { IconControl } from "../IconControl";
 import { TitlePage } from "../TitlePage";
 import { useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { InputPageComment } from "../InputPageComment";
 import { CommentsSection } from "../CommentsSection";
 import { TextSection } from "../../shared/components/TextSection";
@@ -26,6 +24,8 @@ import {
   fetchComments,
 } from "../../store/comment/commentsSliceThunks";
 import { usePrev } from "./usePrev";
+import { TopPagePanelOptions } from "../TopPagePanelOptions";
+import { CoverPage } from "../CoverPage";
 
 export const Page = () => {
   const { id } = useParams<{ id: string }>();
@@ -44,6 +44,16 @@ export const Page = () => {
       fetchChangePage({
         id: page.id,
         iconClass: `icon-${getRandomInt(400)}`,
+      }),
+    );
+  };
+
+  const onHandleAddCover = () => {
+    dispatch(
+      fetchChangePage({
+        id: page.id,
+        coverSrc:
+          "https://www.notion.so/image/https%3A%2F%2Fwww.notion.so%2Fimages%2Fpage-cover%2Frijksmuseum_claesz_1628.jpg?table=block&id=ae63f873-5582-4af8-962e-225f1d8b9a40&spaceId=200e494a-4564-4f4d-a9b4-07c8d20be800&width=1910&userId=d27664a5-59f8-48d0-8e82-38007839f244&cache=v2",
       }),
     );
   };
@@ -71,11 +81,9 @@ export const Page = () => {
   return (
     <>
       <StyledPage>
-        <StyledTopMenu>
-          <Box sx={{ width: "50%" }}>Untitled</Box>
-          <Box sx={{ width: "50%" }}>Share</Box>
-        </StyledTopMenu>
-        <div>
+        <TopPagePanelOptions title={page.title} iconSrc={page.iconSrc} iconClass={page.iconClass} />
+        <CoverPage imageSrc={page.coverSrc} />
+        <div className={page.coverSrc ? 'content-with-cover' : ''}>
           <StyledBoxIcons>
             {page.iconSrc ? (
               <div className="page-icon-container">
@@ -87,19 +95,23 @@ export const Page = () => {
               </div>
             )}
             <StyledControlsBlock>
-              <div onClick={onHandleAddIcon}>
-                <IconControl className="icon-control" text="Add icon">
-                  <EmojiEmotionsIcon />
-                </IconControl>
-              </div>
-              <IconControl className="icon-control" text="Add cover">
+              <IconControl className="icon-control" text="Add icon" onHandleClick={onHandleAddIcon}>
+                <EmojiEmotionsIcon />
+              </IconControl>
+              <IconControl
+                className="icon-control"
+                text="Add cover"
+                onHandleClick={onHandleAddCover}
+              >
                 <ImageIcon />
               </IconControl>
-              <div onClick={() => setVisibleInputComment(true)}>
-                <IconControl className="icon-control" text="Add comment">
-                  <MessageIcon />
-                </IconControl>
-              </div>
+              <IconControl
+                className="icon-control"
+                text="Add comment"
+                onHandleClick={() => setVisibleInputComment(true)}
+              >
+                <MessageIcon />
+              </IconControl>
             </StyledControlsBlock>
           </StyledBoxIcons>
           <TitlePage pageId={page.id} title={page.title} />

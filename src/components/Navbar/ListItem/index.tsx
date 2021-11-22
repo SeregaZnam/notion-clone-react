@@ -5,11 +5,9 @@ import {
   StyledLiItem,
   StyledLink,
   StyledMoreHorizIcon,
-  StyledPageIconDiv,
-  StyledPageIconImg,
-  StylesIconContainer,
 } from "./Styles";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import { SmallIcon } from "../../../shared/components/SmallIcon";
 
 interface Props {
   title: string;
@@ -20,29 +18,12 @@ interface Props {
 }
 
 export const ListItem: FC<Props> = ({ title, iconSrc, iconClass, linkId, defaultTitle = "" }) => {
-  let icon = null;
-
-  if (iconSrc) {
-    icon = (
-      <StylesIconContainer>
-        <StyledPageIconImg src={iconSrc} />
-      </StylesIconContainer>
-    );
-  } else if (iconClass) {
-    icon = (
-      <StylesIconContainer>
-        <StyledPageIconDiv className={iconClass} />
-      </StylesIconContainer>
-    );
-  }
-
   return (
     <StyledLink to={`/${linkId}`} activeClassName="selected">
       <StyledLiItem>
         <div className="item-info">
           <ArrowRightIcon />
-          <></>
-          {icon}
+          <SmallIcon iconSrc={iconSrc} iconClass={iconClass} />
           <span className="item-info-text">{title || defaultTitle}</span>
         </div>
         <StyledControlBlock>

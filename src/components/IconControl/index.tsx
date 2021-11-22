@@ -1,18 +1,20 @@
-import React, { FC } from 'react';
-import MoodIcon from '@mui/icons-material/Mood';
+import React, { FC } from "react";
+import MoodIcon from "@mui/icons-material/Mood";
+import { StyledIconControl } from "./Styles";
 
 interface Props {
-  className?: string;
   text: string;
+  className?: string;
+  onHandleClick?: () => void;
 }
 
-export const IconControl: FC<Props> = ({ text, className = '', children }) => {
+export const IconControl: FC<Props> = ({ text, className = "", onHandleClick, children }) => {
   return (
-    <div className={className} style={{ display: 'flex', height: '28px', padding: '0 8px 0 8px' }}>
-      <span style={{ display: 'flex', alignItems: 'center' }}>
+    <StyledIconControl className={className} onClick={onHandleClick}>
+      <span className="control-content">
         {children}
-        <span style={{ marginLeft: '5px' }}>{text}</span>
+        <span className="control-text">{text}</span>
       </span>
-    </div>
+    </StyledIconControl>
   );
 };
