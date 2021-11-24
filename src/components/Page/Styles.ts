@@ -5,12 +5,13 @@ export const StyledPage = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
+  overflow: auto;
 
   .content-with-cover {
     position: relative;
     top: -114px;
   }
-  
+
   .content-centring {
     padding: 0 96px;
   }
