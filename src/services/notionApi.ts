@@ -121,5 +121,11 @@ export namespace NotionApi {
         body: updatedTextBlock,
       });
     }
+
+    export function removeTextBlock(textBlockId: string): Promise<Response> {
+      return fetch(`${baseUrl}/textBlocks/${textBlockId}`, {
+        method: "DELETE",
+      });
+    }
   }
 }

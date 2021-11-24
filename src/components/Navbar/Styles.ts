@@ -17,6 +17,10 @@ export const StyledUlList = styled.ul`
   font-size: 14px;
   font-weight: 500;
   color: rgba(25, 23, 17, 0.6);
+
+  &.list-scrollable {
+    overflow: hidden auto;
+  }
 `;
 
 export const StyledBottomNewPage = styled.div`

@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { NotionApi } from "../../services/notionApi";
 import { v4 as uuidv4 } from "uuid";
 import { TextBlockModel } from "../../types/TextBlock.model";
-import {RootState} from "../store";
+import { RootState } from "../store";
 
 export const fetchTextBlocks = createAsyncThunk(
   "textBlocks/fetchTextBlocks",
@@ -31,15 +31,24 @@ export const fetchAddTextBlock = createAsyncThunk(
 export const fetchChangeTextBlock = createAsyncThunk(
   "textBlocks/fetchChangeTextBlock",
   async (data: Pick<TextBlockModel, "id"> & Partial<Omit<TextBlockModel, "id">>, { getState }) => {
-      const state = getState() as RootState;
-      const textBlocks = state.textBlocks.textBlocks;
-      const currentTextBlock = textBlocks.find((textBlock) => textBlock.id === data.id);
+    const state = getState() as RootState;
+    const textBlocks = state.textBlocks.textBlocks;
+    const currentTextBlock = textBlocks.find((textBlock) => textBlock.id === data.id);
 
-      const response = await NotionApi.TextBlocks.changeTextBlock({
-          ...currentTextBlock,
-          ...data,
-      });
+    const response = await NotionApi.TextBlocks.changeTextBlock({
+      ...currentTextBlock,
+      ...data,
+    });
 
-      return await response.json();
+    return await response.json();
+  },
+);
+
+export const fetchRemoveTextBlock = createAsyncThunk(
+  "textBlocks/fetchDeleteTextBlock",
+  async ({ id: textBlockId }: Pick<TextBlockModel, "id">) => {
+    const response = await NotionApi.TextBlocks.removeTextBlock(textBlockId);
+
+    return await response.json();
   },
 );

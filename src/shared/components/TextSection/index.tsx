@@ -2,7 +2,10 @@ import React, { FC, useEffect, useState } from "react";
 import { StyledTextSection, StyledTextSectionContainer } from "./Styles";
 import { SectionPageOption } from "../SectionPageOption";
 import { useAppDispatch } from "../../../store/hooks";
-import { fetchChangeTextBlock } from "../../../store/text-block/textBlockThunks";
+import {
+  fetchChangeTextBlock,
+  fetchRemoveTextBlock,
+} from "../../../store/text-block/textBlockThunks";
 
 export const TextSection: FC<{
   pageId: string;
@@ -10,8 +13,23 @@ export const TextSection: FC<{
   order: number;
   textSectionId: string;
 }> = ({ pageId, text, order, textSectionId }) => {
+  const [textValue, setTextValue] = useState(text);
   const [visibleSectionPageOption, setVisibleSectionPageOption] = useState(false);
+  const [textBlockValue, setTextBlockValue] = useState("");
   const dispatch = useAppDispatch();
+
+  const handleKeyPress = (event) => {
+    const targetElement = event.target;
+
+    if (targetElement.innerText === textBlockValue) {
+      dispatch(fetchRemoveTextBlock({ id: textSectionId }));
+      return;
+    }
+
+    if (event.code === "Backspace" || event.keyCode === 8) {
+      setTextBlockValue(targetElement.innerText);
+    }
+  };
 
   useEffect(() => {
     const textSectionElement = document.querySelector(".text-section-container");
@@ -20,6 +38,7 @@ export const TextSection: FC<{
 
     textSectionElement.addEventListener("mouseover", setVisibleTextSection);
     textSectionElement.addEventListener("mouseleave", setHiddenTextSection);
+    textSectionElement.addEventListener("keydown", (event: KeyboardEvent) => {});
 
     return () => {
       textSectionElement.removeEventListener("mouseover", setVisibleTextSection);
@@ -29,9 +48,12 @@ export const TextSection: FC<{
 
   useEffect(() => {
     const handle = (event) => {
+      console.log(event.target.textContent);
+      setTextValue(event.target.textContent);
+
       dispatch(
         fetchChangeTextBlock({
-          text: event.target.textContent,
+          text: textValue,
           pageId: pageId,
           order: order,
           id: textSectionId,
@@ -57,9 +79,11 @@ export const TextSection: FC<{
         <StyledTextSection
           className="test"
           contentEditable={true}
+          suppressContentEditableWarning={true}
+          onKeyDownCapture={handleKeyPress}
           placeholder="Type '/' for commands"
         >
-          {text}
+          {textValue}
         </StyledTextSection>
       </StyledTextSectionContainer>
     </>

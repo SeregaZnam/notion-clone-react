@@ -1,6 +1,11 @@
 import { TextBlockModel } from "../../types/TextBlock.model";
 import { createSlice } from "@reduxjs/toolkit";
-import {fetchAddTextBlock, fetchChangeTextBlock, fetchTextBlocks} from "./textBlockThunks";
+import {
+  fetchAddTextBlock,
+  fetchChangeTextBlock,
+  fetchRemoveTextBlock,
+  fetchTextBlocks,
+} from "./textBlockThunks";
 
 interface TextBlockState {
   textBlocks: TextBlockModel[];
@@ -26,6 +31,12 @@ export const textBlockSlice = createSlice({
     builder.addCase(fetchChangeTextBlock.fulfilled, (state, action) => {
       state.textBlocks = state.textBlocks.map((testBlock) =>
         testBlock.id === action.payload.id ? action.payload : testBlock,
+      );
+    });
+
+    builder.addCase(fetchRemoveTextBlock.fulfilled, (state, action) => {
+      state.textBlocks = state.textBlocks.filter(
+        (textBlock) => textBlock.id !== action.meta.arg.id,
       );
     });
   },

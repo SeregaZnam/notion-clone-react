@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const StyledEmptyPageContent = styled.section`
   display: flex;
+  height: 600px;
   flex-direction: column;
   color: rgba(55, 53, 47, 0.4);
 

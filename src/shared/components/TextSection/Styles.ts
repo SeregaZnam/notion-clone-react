@@ -18,7 +18,8 @@ export const StyledTextSection = styled.div`
   margin: 4px 0;
   border: none;
   outline: none;
-  -webkit-text-fill-color: rgba(55, 53, 47, 0.4);
+  caret-color: rgb(55, 53, 47);
+  color: rgb(55, 53, 47);
 
   :empty:after {
     content: attr(placeholder);

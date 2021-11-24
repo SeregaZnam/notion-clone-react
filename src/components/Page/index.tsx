@@ -75,7 +75,6 @@ export const Page = () => {
     dispatch(fetchComments({ id }));
     dispatch(fetchTextBlocks({ id }));
     dispatch(fetchCallouts({ id }));
-    // dispatch(fetchAddTextBlock({ pageId: id, text: "", order: 0 }));
   }, [id]);
 
   if (!page) {

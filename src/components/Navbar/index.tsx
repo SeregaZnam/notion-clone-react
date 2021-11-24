@@ -40,7 +40,7 @@ export const Navbar = () => {
         </ListItemOption>
       </StyledUlList>
 
-      <StyledUlList>
+      <StyledUlList className="list-scrollable">
         {pages.map((page) => (
           <ListItem
             key={page.id}
