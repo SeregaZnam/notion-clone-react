@@ -3,7 +3,7 @@ import { CommentsSection } from "../CommentsSection";
 import { Modal, PositionModel } from "../../shared/components/Modal";
 import { useAppDispatch } from "../../store/hooks";
 import { StyledModalContainer } from "./Styles";
-import { fetchChangeComment } from "../../store/comment/commentsSliceThunks";
+import { fetchChangeComment } from "../../store/comment/commentSliceThunks";
 
 interface Props {
   pageId: string;

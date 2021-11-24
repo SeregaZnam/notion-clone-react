@@ -1,48 +1,44 @@
-import React, { FC, useState } from "react";
-import { useModal } from "../../hooks/useModal";
+import React, { FC, useEffect, useState } from "react";
 import { Modal, PositionModel } from "../../shared/components/Modal";
 import { InputPageComment } from "../InputPageComment";
-import { StyledHorizontalLine } from "../Page/Styles";
 import { useAppDispatch } from "../../store/hooks";
 import { CommentModel } from "../../types/Comment.model";
-import styled from "styled-components";
-import { StyledForm, StyledInputComment } from "../InputPageComment/Styles";
-import { fetchChangeComment } from "../../store/comment/commentsSliceThunks";
+import { fetchChangeComment } from "../../store/comment/commentSliceThunks";
 
 interface Props {
   title: string;
   position: PositionModel;
   isOpenModal: boolean;
   comment: CommentModel;
+  closeModal: () => void;
 }
 
-const StyledInputPageComment = styled(InputPageComment)<any>`
-  .test123 {
-    padding: 20px !important;
-  }
-`;
-
-export const ModalEditorComment: FC<Props> = ({ title, isOpenModal, position, comment }) => {
+export const ModalEditorComment: FC<Props> = ({
+  title,
+  isOpenModal,
+  position,
+  comment,
+  closeModal,
+}) => {
   const [fileBlob, setFileBlob] = useState(null);
   const dispatch = useAppDispatch();
 
   const onChangeComment = (text): void => {
-    console.log(text);
-    dispatch(
-      fetchChangeComment({ text, id: comment.id }),
-    );
+    dispatch(fetchChangeComment({ text, id: comment.id, imageBlob: fileBlob }));
+    closeModal();
   };
 
   return (
     <Modal title={title} isOpen={isOpenModal} position={position}>
-      {/*<div style={{ padding: "4px 10px 0" }}>*/}
-      <StyledInputPageComment
-        className="test123"
-        handleSubmit={onChangeComment}
-        autoFocus={true}
-        setFileBlob={setFileBlob}
-      />
-      {/*</div>*/}
+      <div style={{ width: "400px", padding: "4px 10px 0" }}>
+        <InputPageComment
+          handleSubmit={onChangeComment}
+          autoFocus={true}
+          setFileBlob={setFileBlob}
+          initValueComment={comment.text}
+          initImagePreviewSrc={comment.imageBlob as string}
+        />
+      </div>
     </Modal>
   );
 };

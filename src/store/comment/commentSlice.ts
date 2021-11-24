@@ -5,7 +5,7 @@ import {
   fetchComments,
   fetchRemoveComment,
   fetchAddComment,
-} from "./commentsSliceThunks";
+} from "./commentSliceThunks";
 
 interface CommentState {
   comments: CommentModel[];

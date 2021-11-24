@@ -1,34 +1,51 @@
-import { memo, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
+import { StyledTextSection, StyledTextSectionContainer } from "./Styles";
 import { SectionPageOption } from "../SectionPageOption";
-import {
-  StyledIcon,
-  StyledTextContent,
-  StyledTextSection,
-  StyledTextSectionContainer,
-} from "./Styles";
+import { useAppDispatch } from "../../../store/hooks";
+import { fetchChangeTextBlock } from "../../../store/text-block/textBlockThunks";
 
-export const TextSection = memo(() => {
+export const TextSection: FC<{
+  pageId: string;
+  text: string;
+  order: number;
+  textSectionId: string;
+}> = ({ pageId, text, order, textSectionId }) => {
   const [visibleSectionPageOption, setVisibleSectionPageOption] = useState(false);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const handle = () => setVisibleSectionPageOption(true);
+    const textSectionElement = document.querySelector(".text-section-container");
+    const setVisibleTextSection = () => setVisibleSectionPageOption(true);
+    const setHiddenTextSection = () => setVisibleSectionPageOption(false);
 
-    document.querySelector(".text-section-container").addEventListener("mouseover", handle);
+    textSectionElement.addEventListener("mouseover", setVisibleTextSection);
+    textSectionElement.addEventListener("mouseleave", setHiddenTextSection);
 
     return () => {
-      document.querySelector(".text-section-container").removeEventListener("mouseover", handle);
+      textSectionElement.removeEventListener("mouseover", setVisibleTextSection);
+      textSectionElement.removeEventListener("mouseleave", setHiddenTextSection);
     };
   }, []);
 
   useEffect(() => {
-    const handle = () => setVisibleSectionPageOption(false);
+    const handle = (event) => {
+      dispatch(
+        fetchChangeTextBlock({
+          text: event.target.textContent,
+          pageId: pageId,
+          order: order,
+          id: textSectionId,
+        }),
+      );
+    };
+    const elem = document.querySelector(".test");
 
-    document.querySelector(".text-section-container").addEventListener("mouseleave", handle);
+    elem.addEventListener("input", handle);
 
     return () => {
-      document.querySelector(".text-section-container").removeEventListener("mouseleave", handle);
+      elem.removeEventListener("input", handle);
     };
-  }, []);
+  });
 
   return (
     <>
@@ -37,15 +54,14 @@ export const TextSection = memo(() => {
           <SectionPageOption visible={visibleSectionPageOption} />
         </div>
 
-        <StyledTextSection>
-          <StyledIcon src="https://notion-emojis.s3-us-west-2.amazonaws.com/v0/svg-twitter/1f4e7.svg" />
-          <StyledTextContent>
-            The modern day reading list includes more than just books. We've created a dashboard to
-            help you track books, articles, podcasts, and videos. Each media type has its own view
-            based on the Type property.
-          </StyledTextContent>
+        <StyledTextSection
+          className="test"
+          contentEditable={true}
+          placeholder="Type '/' for commands"
+        >
+          {text}
         </StyledTextSection>
       </StyledTextSectionContainer>
     </>
   );
-});
+};

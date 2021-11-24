@@ -1,5 +1,7 @@
 import { PageModel } from "../types/Page.model";
 import { CommentModel } from "../types/Comment.model";
+import { CalloutModel } from "../types/Callout.model";
+import { TextBlockModel } from "../types/TextBlock.model";
 
 export namespace NotionApi {
   const baseUrl = "http://localhost:4200";
@@ -67,6 +69,56 @@ export namespace NotionApi {
         headers,
         method: "PUT",
         body: updatedComment,
+      });
+    }
+  }
+
+  export namespace Callouts {
+    export function getCallouts(pageId: string): Promise<Response> {
+      const namePropertyPageId: keyof Pick<CommentModel, "pageId"> = "pageId";
+
+      return fetch(`${baseUrl}/callouts?${namePropertyPageId}=${pageId}`, {
+        method: "GET",
+      });
+    }
+
+    export function addPageCallouts(callout: CalloutModel): Promise<Response> {
+      const newPageCallout = JSON.stringify(callout);
+
+      return fetch(`${baseUrl}/callouts`, {
+        headers,
+        method: "POST",
+        body: newPageCallout,
+      });
+    }
+  }
+
+  export namespace TextBlocks {
+    export function getTextBlocks(pageId: string): Promise<Response> {
+      const namePropertyPageId: keyof Pick<CommentModel, "pageId"> = "pageId";
+
+      return fetch(`${baseUrl}/textBlocks?${namePropertyPageId}=${pageId}`, {
+        method: "GET",
+      });
+    }
+
+    export function addTextBlock(textBlock: TextBlockModel): Promise<Response> {
+      const newTextBlock = JSON.stringify(textBlock);
+
+      return fetch(`${baseUrl}/textBlocks`, {
+        headers,
+        method: "POST",
+        body: newTextBlock,
+      });
+    }
+
+    export function changeTextBlock(textBlock: TextBlockModel): Promise<Response> {
+      const updatedTextBlock = JSON.stringify(textBlock);
+
+      return fetch(`${baseUrl}/textBlocks/${textBlock.id}`, {
+        headers,
+        method: "PUT",
+        body: updatedTextBlock,
       });
     }
   }

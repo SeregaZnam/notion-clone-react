@@ -15,17 +15,21 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import React, { useCallback, useEffect, useState } from "react";
 import { InputPageComment } from "../InputPageComment";
 import { CommentsSection } from "../CommentsSection";
-import { TextSection } from "../../shared/components/TextSection";
+import { CalloutSection } from "../../shared/components/CalloutSection";
 import { fetchChangePage } from "../../store/page/pageSliceThunks";
 import { CountResolvedComments } from "../CountResolvedComments";
 import {
   fetchAddComment,
   fetchChangeComment,
   fetchComments,
-} from "../../store/comment/commentsSliceThunks";
+} from "../../store/comment/commentSliceThunks";
 import { usePrev } from "./usePrev";
 import { TopPagePanelOptions } from "../TopPagePanelOptions";
 import { CoverPage } from "../CoverPage";
+import { fetchCallouts } from "../../store/callout/calloutSliceThunks";
+import { fetchAddTextBlock, fetchTextBlocks } from "../../store/text-block/textBlockThunks";
+import { TextSection } from "../../shared/components/TextSection";
+import { EmptyPageContent } from "../EmptyPageContent";
 
 export const Page = () => {
   const { id } = useParams<{ id: string }>();
@@ -34,6 +38,7 @@ export const Page = () => {
   const [visibleInputComment, setVisibleInputComment] = useState(false);
   const dispatch = useAppDispatch();
   const page = useAppSelector((state) => state.pages.pages.find((page) => page.id === id));
+  const textSections = useAppSelector((state) => state.textBlocks.textBlocks);
 
   const onAddComment = (text): void => {
     dispatch(fetchAddComment({ text, pageId: id, imageBlob: fileBlob }));
@@ -68,6 +73,9 @@ export const Page = () => {
 
   useEffect(() => {
     dispatch(fetchComments({ id }));
+    dispatch(fetchTextBlocks({ id }));
+    dispatch(fetchCallouts({ id }));
+    // dispatch(fetchAddTextBlock({ pageId: id, text: "", order: 0 }));
   }, [id]);
 
   if (!page) {
@@ -83,7 +91,7 @@ export const Page = () => {
       <StyledPage>
         <TopPagePanelOptions title={page.title} iconSrc={page.iconSrc} iconClass={page.iconClass} />
         <CoverPage imageSrc={page.coverSrc} />
-        <div className={page.coverSrc ? 'content-with-cover' : ''}>
+        <div className={page.coverSrc ? "content-with-cover" : ""}>
           <StyledBoxIcons>
             {page.iconSrc ? (
               <div className="page-icon-container">
@@ -115,22 +123,41 @@ export const Page = () => {
             </StyledControlsBlock>
           </StyledBoxIcons>
           <TitlePage pageId={page.id} title={page.title} />
-          <CommentsSection pageId={page.id} optionText="Resolve" onOptionClick={onResolveComment} />
-          {visibleInputComment && (
-            <>
-              <InputPageComment
-                handleSubmit={onAddComment}
-                autoFocus={true}
-                setFileBlob={setFileBlob}
-              />
-              <StyledHorizontalLine />
-            </>
-          )}
-          <div style={{ padding: "0 96px" }}>
+          <div className="content-centring">
+            <CommentsSection
+              pageId={page.id}
+              optionText="Resolve"
+              onOptionClick={onResolveComment}
+            />
+            {visibleInputComment && (
+              <>
+                <InputPageComment
+                  handleSubmit={onAddComment}
+                  autoFocus={true}
+                  setFileBlob={setFileBlob}
+                />
+                <StyledHorizontalLine />
+              </>
+            )}
             <CountResolvedComments pageId={page.id} />
           </div>
 
-          <TextSection />
+          {/*<CalloutSection />*/}
+          {textSections.map((i) => (
+            <TextSection
+              pageId={i.id}
+              text={i.text}
+              order={i.order}
+              textSectionId={i.id}
+              key={i.id}
+            />
+          ))}
+
+          {textSections.length === 0 && (
+            <div className="content-centring">
+              <EmptyPageContent id={page.id} />
+            </div>
+          )}
         </div>
       </StyledPage>
     </>

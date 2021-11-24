@@ -4,5 +4,5 @@ export interface CommentModel {
   text: string;
   date: number;
   resolved: boolean;
-  imageBlob?: Blob | null;
+  imageBlob?: Blob | string | null;
 }

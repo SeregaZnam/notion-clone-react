@@ -12,11 +12,19 @@ interface Props {
   handleSubmit: (value: string) => void;
   setFileBlob: (value: string) => void;
   autoFocus: boolean;
+  initValueComment?: string;
+  initImagePreviewSrc?: string | null;
 }
 
-export const InputPageComment: FC<Props> = ({ handleSubmit, autoFocus, setFileBlob }) => {
-  const [inputValueComment, setInputValueComment] = useState("");
-  const [imagePreviewSrc, setImagePreviewSrc] = useState("");
+export const InputPageComment: FC<Props> = ({
+  handleSubmit,
+  autoFocus,
+  setFileBlob,
+  initValueComment = "",
+  initImagePreviewSrc = null,
+}) => {
+  const [inputValueComment, setInputValueComment] = useState(initValueComment);
+  const [imagePreviewSrc, setImagePreviewSrc] = useState(initImagePreviewSrc);
   const fileInputRef = useRef<HTMLInputElement>();
 
   const onSubmit = (event) => {
@@ -49,12 +57,13 @@ export const InputPageComment: FC<Props> = ({ handleSubmit, autoFocus, setFileBl
 
   const removeImage = () => {
     setFileBlob("");
+    setImagePreviewSrc("");
     fileInputRef.current.value = "";
   };
 
   useEffect(() => {
-    if (fileInputRef.current.value.length === 0) {
-      setImagePreviewSrc("");
+    if (fileInputRef.current.value.length === 0 && imagePreviewSrc === "") {
+      setImagePreviewSrc(null);
     }
   }, [fileInputRef.current?.value]);
 
@@ -67,16 +76,16 @@ export const InputPageComment: FC<Props> = ({ handleSubmit, autoFocus, setFileBl
         onChange={(event) => setInputValueComment(event.target.value)}
         autoFocus={autoFocus}
       />
-      <label htmlFor="upload-file">
+      <label>
         <StyledAttachFileIcon />
-        <input id="upload-file" type="file" ref={fileInputRef} onChange={handleFileInput} hidden />
+        <input type="file" ref={fileInputRef} onChange={handleFileInput} hidden />
       </label>
-      {imagePreviewSrc && (
+      <div hidden={!imagePreviewSrc}>
         <StyledImagePreview>
           <StyledImagePreload imageSrc={`url(${imagePreviewSrc})`} />
           <StyledCancelIcon onClick={removeImage} />
         </StyledImagePreview>
-      )}
+      </div>
     </StyledForm>
   );
 };

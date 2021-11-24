@@ -9,6 +9,10 @@ export const StyledPage = styled.div`
     position: relative;
     top: -114px;
   }
+  
+  .content-centring {
+    padding: 0 96px;
+  }
 `;
 
 export const StyledBoxIcons = styled.div`

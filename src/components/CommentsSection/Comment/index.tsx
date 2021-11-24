@@ -1,4 +1,4 @@
-import React, { FC, memo, useCallback, useState } from "react";
+import React, { FC, memo, useState } from "react";
 import { CommentModel } from "../../../types/Comment.model";
 import { StyledComment, StyledCommentDate, StyledControlOptions } from "./Styles";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
@@ -7,7 +7,7 @@ import { useModal } from "../../../hooks/useModal";
 import { ModalOptionsComments } from "../../ModalOptionsComments";
 import { useAppDispatch } from "../../../store/hooks";
 import { ModalEditorComment } from "../../ModalEditorComment";
-import { fetchRemoveComment } from "../../../store/comment/commentsSliceThunks";
+import { fetchRemoveComment } from "../../../store/comment/commentSliceThunks";
 
 interface Props {
   comment: CommentModel;
@@ -29,6 +29,7 @@ export const Comment: FC<Props> = memo(({ comment, optionText, onOptionClick }) 
     position: positionEditor,
     isOpenModal: isOpenModalEditor,
     openModal: openModalEditor,
+    closeModal: closeModalEditor,
   } = useModal({
     title: "editorComment",
   });
@@ -78,7 +79,7 @@ export const Comment: FC<Props> = memo(({ comment, optionText, onOptionClick }) 
         isOpenModal={isOpenModal}
         deleteComment={deleteComment}
         openEditorComment={(event) => {
-          openModalEditor([`${event.pageX - 200}px`, `${event.pageY}px`]);
+          openModalEditor([`${event.pageX - 400}px`, `${event.pageY}px`]);
           closeModal();
         }}
       />
@@ -88,6 +89,7 @@ export const Comment: FC<Props> = memo(({ comment, optionText, onOptionClick }) 
         position={positionEditor}
         isOpenModal={isOpenModalEditor}
         comment={comment}
+        closeModal={closeModalEditor}
       />
     </StyledComment>
   );
