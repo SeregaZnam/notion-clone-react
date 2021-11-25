@@ -11,12 +11,23 @@ import CollectionsOutlinedIcon from "@mui/icons-material/CollectionsOutlined";
 import FeedOutlinedIcon from "@mui/icons-material/FeedOutlined";
 import { fetchAddTextBlock } from "../../store/text-block/textBlockThunks";
 import { useAppDispatch } from "../../store/hooks";
+import { fetchChangePage } from "../../store/page/pageSliceThunks";
+import { getRandomInt } from "../../helpers/getRandomInt";
 
-export const EmptyPageContent: FC<{ id: string }> = ({ id }) => {
+export const EmptyPageContent: FC<{ pageId: string }> = ({ pageId }) => {
   const dispatch = useAppDispatch();
 
   const addTextContent = () => {
-    dispatch(fetchAddTextBlock({ pageId: id, text: "", order: 0 }));
+    dispatch(fetchAddTextBlock({ pageId, text: "", order: 0 }));
+  };
+
+  const onHandleAddIcon = () => {
+    dispatch(
+      fetchChangePage({
+        id: pageId,
+        iconClass: `icon-${getRandomInt(400)}`,
+      }),
+    );
   };
 
   return (
@@ -25,13 +36,13 @@ export const EmptyPageContent: FC<{ id: string }> = ({ id }) => {
         Press Enter to continue with an empty page, or pick a template (↑↓ to select)
       </div>
       <ul>
-        <li className="page-list-item">
+        <li className="page-list-item" onClick={onHandleAddIcon}>
           <span>
             <DescriptionOutlinedIcon />
           </span>
           <span>Empty with icon</span>
         </li>
-        <li className="page-list-item">
+        <li className="page-list-item" onClick={addTextContent}>
           <span>
             <InsertDriveFileOutlinedIcon />
           </span>

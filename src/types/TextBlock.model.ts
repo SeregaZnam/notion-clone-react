@@ -3,4 +3,5 @@ export interface TextBlockModel {
   pageId: string;
   text: string;
   order: number;
+  type: string;
 }

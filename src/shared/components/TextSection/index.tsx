@@ -20,15 +20,14 @@ export const TextSection: FC<{
 
   const handleKeyPress = (event) => {
     const targetElement = event.target;
+    const isPressedBackspace = event.code === "Backspace" || event.keyCode === 8;
 
-    if (targetElement.innerText === textBlockValue) {
+    if (targetElement.innerText === textBlockValue && isPressedBackspace) {
       dispatch(fetchRemoveTextBlock({ id: textSectionId }));
       return;
     }
 
-    if (event.code === "Backspace" || event.keyCode === 8) {
-      setTextBlockValue(targetElement.innerText);
-    }
+    setTextBlockValue(targetElement.innerText);
   };
 
   useEffect(() => {

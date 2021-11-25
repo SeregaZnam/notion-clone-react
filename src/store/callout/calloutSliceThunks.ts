@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CalloutModel } from "../../types/Callout.model";
 import { NotionApi } from "../../services/notionApi";
 import { v4 as uuidv4 } from "uuid";
+import { SectionType } from "../../types/SectionType.enum";
 
 export const fetchCallouts = createAsyncThunk(
   "callouts/fetchCallouts",
@@ -21,6 +22,7 @@ export const fetchAddCallout = createAsyncThunk(
       pageId,
       imageClass,
       id: uuidv4(),
+      type: SectionType.Callout,
     };
     const response = await NotionApi.Callouts.addPageCallouts(newCallout);
 

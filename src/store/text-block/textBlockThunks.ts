@@ -3,6 +3,7 @@ import { NotionApi } from "../../services/notionApi";
 import { v4 as uuidv4 } from "uuid";
 import { TextBlockModel } from "../../types/TextBlock.model";
 import { RootState } from "../store";
+import { SectionType } from "../../types/SectionType.enum";
 
 export const fetchTextBlocks = createAsyncThunk(
   "textBlocks/fetchTextBlocks",
@@ -21,6 +22,7 @@ export const fetchAddTextBlock = createAsyncThunk(
       pageId,
       order,
       id: uuidv4(),
+      type: SectionType.TextBlock,
     };
     const response = await NotionApi.TextBlocks.addTextBlock(newTextBlock);
 

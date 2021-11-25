@@ -4,7 +4,7 @@
       "id": "6ac57c99-d9b6-42e7-beec-50f848af2247",
       "title": "Reading Lista",
       "iconSrc": "",
-      "iconClass": "icon-175",
+      "iconClass": "icon-81",
       "coverSrc": "https://www.notion.so/image/https%3A%2F%2Fwww.notion.so%2Fimages%2Fpage-cover%2Frijksmuseum_claesz_1628.jpg?table=block&id=ae63f873-5582-4af8-962e-225f1d8b9a40&spaceId=200e494a-4564-4f4d-a9b4-07c8d20be800&width=1910&userId=d27664a5-59f8-48d0-8e82-38007839f244&cache=v2"
     },
     {
@@ -40,6 +40,14 @@
     }
   ],
   "comments": [],
-  "textBlocks": [],
+  "textBlocks": [
+    {
+      "text": "ewfhio",
+      "pageId": "9cfdecaf-0ba3-4ca1-8f77-8b9180768351",
+      "order": 0,
+      "id": "9cfdecaf-0ba3-4ca1-8f77-8b9180768351",
+      "type": "TextBlock"
+    }
+  ],
   "callouts": []
 }

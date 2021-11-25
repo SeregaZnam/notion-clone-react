@@ -30,6 +30,7 @@ import { fetchCallouts } from "../../store/callout/calloutSliceThunks";
 import { fetchAddTextBlock, fetchTextBlocks } from "../../store/text-block/textBlockThunks";
 import { TextSection } from "../../shared/components/TextSection";
 import { EmptyPageContent } from "../EmptyPageContent";
+import {getRandomInt} from "../../helpers/getRandomInt";
 
 export const Page = () => {
   const { id } = useParams<{ id: string }>();
@@ -79,10 +80,6 @@ export const Page = () => {
 
   if (!page) {
     return null;
-  }
-
-  function getRandomInt(max) {
-    return Math.floor(Math.random() * (max - 2)) + 1;
   }
 
   return (
@@ -154,7 +151,7 @@ export const Page = () => {
 
           {textSections.length === 0 && (
             <div className="content-centring">
-              <EmptyPageContent id={page.id} />
+              <EmptyPageContent pageId={page.id} />
             </div>
           )}
         </div>

@@ -4,4 +4,5 @@ export interface CalloutModel {
   imageClass: string;
   text: string;
   order: number;
+  type: string;
 }
