@@ -3,6 +3,7 @@ import { StyledTextSection, StyledTextSectionContainer } from "./Styles";
 import { SectionPageOption } from "../SectionPageOption";
 import { useAppDispatch } from "../../../store/hooks";
 import {
+  fetchAddTextBlock,
   fetchChangeTextBlock,
   fetchRemoveTextBlock,
 } from "../../../store/text-block/textBlockThunks";
@@ -14,35 +15,28 @@ export const TextSection: FC<{
   textSectionId: string;
 }> = ({ pageId, text, order, textSectionId }) => {
   const [textValue] = useState(text);
-  const [visibleSectionPageOption, setVisibleSectionPageOption] = useState(false);
   const dispatch = useAppDispatch();
+  const textSectionContainerRef = useRef<HTMLDivElement>();
   const textSectionRef = useRef<HTMLDivElement>();
 
   const handleKeyPress = (event) => {
     const targetElement = event.target;
     const isPressedBackspace = event.code === "Backspace" || event.keyCode === 8;
+    const isPressedEnter = event.code === "Enter" || event.keyCode === 13;
 
     if (targetElement.innerText === "" && isPressedBackspace) {
       dispatch(fetchRemoveTextBlock({ id: textSectionId }));
+      return;
+    }
+
+    if (isPressedEnter) {
+      dispatch(fetchAddTextBlock({ pageId, text: "", order: 0 }));
+      return;
     }
   };
 
   useEffect(() => {
-    const textSectionElement = document.querySelector(".text-section-container");
-    const setVisibleTextSection = () => setVisibleSectionPageOption(true);
-    const setHiddenTextSection = () => setVisibleSectionPageOption(false);
-
-    textSectionElement.addEventListener("mouseover", setVisibleTextSection);
-    textSectionElement.addEventListener("mouseleave", setHiddenTextSection);
-    textSectionElement.addEventListener("keydown", (event: KeyboardEvent) => {});
-
-    return () => {
-      textSectionElement.removeEventListener("mouseover", setVisibleTextSection);
-      textSectionElement.removeEventListener("mouseleave", setHiddenTextSection);
-    };
-  }, []);
-
-  useEffect(() => {
+    const textSectionInstance = textSectionRef.current;
     const handle = (event) =>
       dispatch(
         fetchChangeTextBlock({
@@ -52,13 +46,9 @@ export const TextSection: FC<{
           id: textSectionId,
         }),
       );
-    const elem = document.querySelector(".test");
+    textSectionInstance.addEventListener("input", handle);
 
-    elem.addEventListener("input", handle);
-
-    return () => {
-      elem.removeEventListener("input", handle);
-    };
+    return () => textSectionInstance.removeEventListener("input", handle);
   }, []);
 
   useEffect(() => {
@@ -69,15 +59,14 @@ export const TextSection: FC<{
 
   return (
     <>
-      <StyledTextSectionContainer className="text-section-container">
+      <StyledTextSectionContainer ref={textSectionContainerRef}>
         <div className="page-option">
-          <SectionPageOption visible={visibleSectionPageOption} />
+          <SectionPageOption refContainer={textSectionContainerRef} />
         </div>
 
         <StyledTextSection
-          className="test"
-          contentEditable={true}
           ref={textSectionRef}
+          contentEditable={true}
           suppressContentEditableWarning={true}
           onKeyDownCapture={handleKeyPress}
           placeholder="Type '/' for commands"

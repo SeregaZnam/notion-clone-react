@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import { SectionPageOption } from "../SectionPageOption";
 import {
   StyledIcon,
@@ -8,27 +8,12 @@ import {
 } from "./Styles";
 
 export const CalloutSection = memo(() => {
-  const [visibleSectionPageOption, setVisibleSectionPageOption] = useState(false);
-
-  useEffect(() => {
-    const textSectionElement = document.querySelector(".callout-section-container");
-    const setVisibleTextSection = () => setVisibleSectionPageOption(true);
-    const setHiddenTextSection = () => setVisibleSectionPageOption(false);
-
-    textSectionElement.addEventListener("mouseover", setVisibleTextSection);
-    textSectionElement.addEventListener("mouseleave", setHiddenTextSection);
-
-    return () => {
-      textSectionElement.removeEventListener("mouseover", setVisibleTextSection);
-      textSectionElement.removeEventListener("mouseleave", setHiddenTextSection);
-    };
-  }, []);
-
+  const textSectionContainerRef = useRef<HTMLDivElement>();
   return (
     <>
-      <StyledCalloutSectionContainer className="callout-section-container">
+      <StyledCalloutSectionContainer ref={textSectionContainerRef}>
         <div className="page-option">
-          <SectionPageOption visible={visibleSectionPageOption} />
+          <SectionPageOption refContainer={textSectionContainerRef} />
         </div>
 
         <StyledTextSection>

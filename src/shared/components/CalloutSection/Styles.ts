@@ -2,12 +2,11 @@ import styled from "styled-components";
 
 export const StyledCalloutSectionContainer = styled.section`
   position: relative;
-  padding: 0 96px;
   transition: all 200ms;
 
   .page-option {
     position: absolute;
-    left: 45px;
+    left: -50px;
     top: 3px;
   }
 `;

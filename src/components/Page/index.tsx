@@ -30,7 +30,7 @@ import { fetchCallouts } from "../../store/callout/calloutSliceThunks";
 import { fetchAddTextBlock, fetchTextBlocks } from "../../store/text-block/textBlockThunks";
 import { TextSection } from "../../shared/components/TextSection";
 import { EmptyPageContent } from "../EmptyPageContent";
-import {getRandomInt} from "../../helpers/getRandomInt";
+import { getRandomInt } from "../../helpers/getRandomInt";
 
 export const Page = () => {
   const { id } = useParams<{ id: string }>();
@@ -136,18 +136,18 @@ export const Page = () => {
               </>
             )}
             <CountResolvedComments pageId={page.id} />
-          </div>
 
-          {/*<CalloutSection />*/}
-          {textSections.map((i) => (
-            <TextSection
-              pageId={i.id}
-              text={i.text}
-              order={i.order}
-              textSectionId={i.id}
-              key={i.id}
-            />
-          ))}
+            <CalloutSection />
+            {textSections.map((i) => (
+              <TextSection
+                pageId={page.id}
+                text={i.text}
+                order={i.order}
+                textSectionId={i.id}
+                key={i.id}
+              />
+            ))}
+          </div>
 
           {textSections.length === 0 && (
             <div className="content-centring">
