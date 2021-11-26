@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { StyledTextSection, StyledTextSectionContainer } from "./Styles";
 import { SectionPageOption } from "../SectionPageOption";
 import { useAppDispatch } from "../../../store/hooks";
@@ -13,21 +13,18 @@ export const TextSection: FC<{
   order: number;
   textSectionId: string;
 }> = ({ pageId, text, order, textSectionId }) => {
-  const [textValue, setTextValue] = useState(text);
+  const [textValue] = useState(text);
   const [visibleSectionPageOption, setVisibleSectionPageOption] = useState(false);
-  const [textBlockValue, setTextBlockValue] = useState("");
   const dispatch = useAppDispatch();
+  const textSectionRef = useRef<HTMLDivElement>();
 
   const handleKeyPress = (event) => {
     const targetElement = event.target;
     const isPressedBackspace = event.code === "Backspace" || event.keyCode === 8;
 
-    if (targetElement.innerText === textBlockValue && isPressedBackspace) {
+    if (targetElement.innerText === "" && isPressedBackspace) {
       dispatch(fetchRemoveTextBlock({ id: textSectionId }));
-      return;
     }
-
-    setTextBlockValue(targetElement.innerText);
   };
 
   useEffect(() => {
@@ -46,19 +43,15 @@ export const TextSection: FC<{
   }, []);
 
   useEffect(() => {
-    const handle = (event) => {
-      console.log(event.target.textContent);
-      setTextValue(event.target.textContent);
-
+    const handle = (event) =>
       dispatch(
         fetchChangeTextBlock({
-          text: textValue,
+          text: event.target.textContent,
           pageId: pageId,
           order: order,
           id: textSectionId,
         }),
       );
-    };
     const elem = document.querySelector(".test");
 
     elem.addEventListener("input", handle);
@@ -66,7 +59,13 @@ export const TextSection: FC<{
     return () => {
       elem.removeEventListener("input", handle);
     };
-  });
+  }, []);
+
+  useEffect(() => {
+    if (text === "") {
+      textSectionRef.current.focus();
+    }
+  }, []);
 
   return (
     <>
@@ -78,6 +77,7 @@ export const TextSection: FC<{
         <StyledTextSection
           className="test"
           contentEditable={true}
+          ref={textSectionRef}
           suppressContentEditableWarning={true}
           onKeyDownCapture={handleKeyPress}
           placeholder="Type '/' for commands"
