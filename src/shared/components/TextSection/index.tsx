@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useContext, useEffect, useRef, useState } from "react";
 import { StyledTextSection, StyledTextSectionContainer } from "./Styles";
 import { SectionPageOption } from "../SectionPageOption";
 import { useAppDispatch } from "../../../store/hooks";
@@ -7,13 +7,14 @@ import {
   fetchChangeTextBlock,
   fetchRemoveTextBlock,
 } from "../../../store/text-block/textBlockThunks";
+import { PageIdContext } from "../../../components/Page";
 
 export const TextSection: FC<{
-  pageId: string;
   text: string;
   order: number;
   textSectionId: string;
-}> = ({ pageId, text, order, textSectionId }) => {
+}> = ({ text, order, textSectionId }) => {
+  const pageId = useContext(PageIdContext);
   const [textValue] = useState(text);
   const dispatch = useAppDispatch();
   const textSectionContainerRef = useRef<HTMLDivElement>();
@@ -66,7 +67,7 @@ export const TextSection: FC<{
 
         <StyledTextSection
           ref={textSectionRef}
-          contentEditable={true}
+          contentEditable="true"
           suppressContentEditableWarning={true}
           onKeyDownCapture={handleKeyPress}
           placeholder="Type '/' for commands"

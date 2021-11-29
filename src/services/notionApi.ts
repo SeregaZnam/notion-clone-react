@@ -91,6 +91,12 @@ export namespace NotionApi {
         body: newPageCallout,
       });
     }
+
+    export function removeCallouts(calloutId: string): Promise<Response> {
+      return fetch(`${baseUrl}/callouts/${calloutId}`, {
+        method: "DELETE",
+      });
+    }
   }
 
   export namespace TextBlocks {

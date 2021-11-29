@@ -1,5 +1,7 @@
 import { FC, MutableRefObject, useEffect, useState } from "react";
 import { StyledAddIcon, StyledDragIndicatorIcon, StyledSectionPageOption } from "./Styles";
+import { ModalAddBlock } from "../../../components/ModalAddBlock";
+import { useModal } from "../../../hooks/useModal";
 
 interface Props {
   refContainer: MutableRefObject<Element>;
@@ -7,6 +9,9 @@ interface Props {
 
 export const SectionPageOption: FC<Props> = ({ refContainer }) => {
   const [visibleSectionPageOption, setVisibleSectionPageOption] = useState(false);
+  const { title, position, isOpenModal, openModal, closeModal } = useModal({
+    title: "addBlock",
+  });
 
   useEffect(() => {
     const textSectionContainerInstance = refContainer.current;
@@ -24,9 +29,18 @@ export const SectionPageOption: FC<Props> = ({ refContainer }) => {
   }, [refContainer]);
 
   return (
-    <StyledSectionPageOption style={{ opacity: visibleSectionPageOption ? 1 : 0 }}>
-      <StyledAddIcon />
-      <StyledDragIndicatorIcon />
-    </StyledSectionPageOption>
+    <>
+      <StyledSectionPageOption style={{ opacity: visibleSectionPageOption ? 1 : 0 }}>
+        <StyledAddIcon onClick={(event) => openModal([`${event.pageX}px`, `${event.pageY}px`])} />
+        <StyledDragIndicatorIcon />
+      </StyledSectionPageOption>
+
+      <ModalAddBlock
+        title={title}
+        isOpenModal={isOpenModal}
+        position={position}
+        closeModal={closeModal}
+      />
+    </>
   );
 };

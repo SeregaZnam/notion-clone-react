@@ -12,7 +12,7 @@ import { IconControl } from "../IconControl";
 import { TitlePage } from "../TitlePage";
 import { useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { createContext, useCallback, useEffect, useState } from "react";
 import { InputPageComment } from "../InputPageComment";
 import { CommentsSection } from "../CommentsSection";
 import { CalloutSection } from "../../shared/components/CalloutSection";
@@ -32,6 +32,8 @@ import { TextSection } from "../../shared/components/TextSection";
 import { EmptyPageContent } from "../EmptyPageContent";
 import { getRandomInt } from "../../helpers/getRandomInt";
 
+export const PageIdContext = createContext("");
+
 export const Page = () => {
   const { id } = useParams<{ id: string }>();
 
@@ -40,6 +42,7 @@ export const Page = () => {
   const dispatch = useAppDispatch();
   const page = useAppSelector((state) => state.pages.pages.find((page) => page.id === id));
   const textSections = useAppSelector((state) => state.textBlocks.textBlocks);
+  const callouts = useAppSelector((state) => state.callouts.callouts);
 
   const onAddComment = (text): void => {
     dispatch(fetchAddComment({ text, pageId: id, imageBlob: fileBlob }));
@@ -67,6 +70,8 @@ export const Page = () => {
   const onResolveComment = useCallback((commentId: string) => {
     dispatch(fetchChangeComment({ id: commentId, resolved: true }));
   }, []);
+
+  console.log(1);
 
   // const prevFunc = usePrev(onResolveComment);
   //
@@ -137,16 +142,24 @@ export const Page = () => {
             )}
             <CountResolvedComments pageId={page.id} />
 
-            <CalloutSection />
-            {textSections.map((i) => (
-              <TextSection
-                pageId={page.id}
-                text={i.text}
-                order={i.order}
-                textSectionId={i.id}
-                key={i.id}
-              />
-            ))}
+            <PageIdContext.Provider value={page.id}>
+              {callouts.map((item) => (
+                <CalloutSection
+                  calloutId={item.id}
+                  text={item.text}
+                  imageClass={item.imageClass}
+                  key={item.id}
+                />
+              ))}
+              {textSections.map((item) => (
+                <TextSection
+                  text={item.text}
+                  order={item.order}
+                  textSectionId={item.id}
+                  key={item.id}
+                />
+              ))}
+            </PageIdContext.Provider>
           </div>
 
           {textSections.length === 0 && (

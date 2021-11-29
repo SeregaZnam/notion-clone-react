@@ -15,16 +15,25 @@ export const fetchCallouts = createAsyncThunk(
 
 export const fetchAddCallout = createAsyncThunk(
   "callouts/fetchAddCallout",
-  async ({ pageId, order, text, imageClass }: Omit<CalloutModel, "id">) => {
+  async ({ pageId, order, text }: Omit<CalloutModel, "id" | "type" | "imageClass">) => {
     const newCallout: CalloutModel = {
       text,
       order,
       pageId,
-      imageClass,
+      imageClass: "icon-81",
       id: uuidv4(),
       type: SectionType.Callout,
     };
     const response = await NotionApi.Callouts.addPageCallouts(newCallout);
+
+    return await response.json();
+  },
+);
+
+export const fetchRemoveCallout = createAsyncThunk(
+  "callouts/fetchRemoveCallout",
+  async ({ id: calloutId }: Pick<CalloutModel, "id">) => {
+    const response = await NotionApi.Callouts.removeCallouts(calloutId);
 
     return await response.json();
   },

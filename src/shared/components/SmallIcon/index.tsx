@@ -2,7 +2,10 @@ import React, { FC } from "react";
 import { StyledPageIconDiv, StyledPageIconImg, StylesIconContainer } from "./Styles";
 import { PageModel } from "../../../types/Page.model";
 
-export const SmallIcon: FC<Pick<PageModel, "iconSrc" | "iconClass">> = ({ iconClass, iconSrc }) => {
+export const SmallIcon: FC<Partial<Pick<PageModel, "iconSrc" | "iconClass">>> = ({
+  iconClass,
+  iconSrc,
+}) => {
   if (iconSrc) {
     return (
       <StylesIconContainer>
