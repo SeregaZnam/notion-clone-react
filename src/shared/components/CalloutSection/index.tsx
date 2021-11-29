@@ -51,11 +51,9 @@ export const CalloutSection: FC<Props> = memo(({ calloutId, text, imageClass }) 
             contentEditable="true"
             suppressContentEditableWarning={true}
             onKeyDownCapture={handleKeyPress}
+            placeholder="Type something..."
           >
             {text}
-            {/*The modern day reading list includes more than just books. We've created a dashboard to*/}
-            {/*help you track books, articles, podcasts, and videos. Each media type has its own view*/}
-            {/*based on the Type property.*/}
           </StyledTextContent>
         </StyledTextSection>
       </StyledCalloutSectionContainer>

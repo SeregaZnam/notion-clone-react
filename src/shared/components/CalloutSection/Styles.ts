@@ -25,11 +25,23 @@ export const StyledIcon = styled.img`
 `;
 
 export const StyledTextContent = styled.div`
+  margin-left: 15px;
   max-width: 100%;
   width: 100%;
-  white-space: pre-wrap;
   padding-left: 2px;
   padding-right: 2px;
   font-size: 16px;
   line-height: 1.5;
+  border: none;
+  outline: none;
+  caret-color: rgb(55, 53, 47);
+  color: rgb(55, 53, 47);
+  white-space: break-spaces;
+  word-break: break-word;
+
+  :empty:after {
+    content: attr(placeholder);
+    cursor: text;
+    color: rgba(55, 53, 47, 0.4);
+  }
 `;
