@@ -71,8 +71,6 @@ export const Page = () => {
     dispatch(fetchChangeComment({ id: commentId, resolved: true }));
   }, []);
 
-  console.log(1);
-
   // const prevFunc = usePrev(onResolveComment);
   //
   // console.log(onResolveComment === prevFunc);

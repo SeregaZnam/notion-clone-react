@@ -2,32 +2,30 @@ import React, { FC } from "react";
 import { StyledPageIconDiv, StyledPageIconImg, StylesIconContainer } from "./Styles";
 import { PageModel } from "../../../types/Page.model";
 import { ModalIconsMenu } from "../../../components/ModalIconsMenu";
+import { useModal } from "../../../hooks/useModal";
 
 export const SmallIcon: FC<Partial<Pick<PageModel, "iconSrc" | "iconClass">>> = ({
   iconClass,
   iconSrc,
 }) => {
-  let template = null;
-
+  let pageIconTemplate = null;
+  const { title, position, isOpenModal, openModal, closeModal } = useModal({
+    title: "iconsMenu",
+  });
+  console.log(iconClass);
   if (iconSrc) {
-    template = (
-      <StylesIconContainer>
-        <StyledPageIconImg src={iconSrc} />
-      </StylesIconContainer>
-    );
+    pageIconTemplate = <StyledPageIconImg src={iconSrc} />;
   } else if (iconClass) {
-    template = (
-      <StylesIconContainer>
-        <StyledPageIconDiv className={iconClass} />
-      </StylesIconContainer>
-    );
+    pageIconTemplate = <StyledPageIconDiv className={iconClass} />;
   }
 
   return (
     <>
-      {template}
+      <StylesIconContainer onClick={(event) => openModal([`${event.pageX}px`, `${event.pageY}px`])}>
+        {pageIconTemplate}
+      </StylesIconContainer>
 
-      <ModalIconsMenu />
+      <ModalIconsMenu title={title} position={position} isOpenModal={isOpenModal} />
     </>
   );
 };
