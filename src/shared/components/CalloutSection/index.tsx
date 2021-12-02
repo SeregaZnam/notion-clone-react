@@ -1,30 +1,22 @@
 import React, { createContext, FC, memo, useContext, useEffect, useRef, useState } from "react";
 import { SectionPageOption } from "../SectionPageOption";
-import {
-  StyledIcon,
-  StyledTextContent,
-  StyledTextSection,
-  StyledCalloutSectionContainer,
-} from "./Styles";
+import { StyledTextContent, StyledTextSection, StyledCalloutSectionContainer } from "./Styles";
 import { SmallIcon } from "../SmallIcon";
-import { fetchAddTextBlock, fetchRemoveTextBlock } from "../../../store/text-block/textBlockThunks";
+import { fetchAddTextBlock } from "../../../store/text-block/textBlockThunks";
 import { useAppDispatch } from "../../../store/hooks";
 import { PageIdContext } from "../../../components/Page";
-import {
-  fetchCallouts,
-  fetchChangeCallout,
-  fetchRemoveCallout,
-} from "../../../store/callout/calloutSliceThunks";
+import { fetchChangeCallout, fetchRemoveCallout } from "../../../store/callout/calloutSliceThunks";
 
 interface Props {
   calloutId: string;
   imageClass: string;
   text: string;
+  nextOrder: number;
 }
 
 export const CalloutIdContext = createContext("");
 
-export const CalloutSection: FC<Props> = memo(({ calloutId, text, imageClass }) => {
+export const CalloutSection: FC<Props> = memo(({ calloutId, text, imageClass, nextOrder }) => {
   const [textValue] = useState(text);
   const textSectionContainerRef = useRef<HTMLDivElement>();
   const dispatch = useAppDispatch();
@@ -71,7 +63,9 @@ export const CalloutSection: FC<Props> = memo(({ calloutId, text, imageClass }) 
     <>
       <StyledCalloutSectionContainer ref={textSectionContainerRef}>
         <div className="page-option">
-          <SectionPageOption refContainer={textSectionContainerRef} />
+
+          <SectionPageOption refContainer={textSectionContainerRef} nextOrder={nextOrder} />
+
         </div>
 
         <CalloutIdContext.Provider value={calloutId}>

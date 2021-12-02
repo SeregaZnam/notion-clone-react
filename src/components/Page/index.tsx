@@ -31,18 +31,25 @@ import { fetchAddTextBlock, fetchTextBlocks } from "../../store/text-block/textB
 import { TextSection } from "../../shared/components/TextSection";
 import { EmptyPageContent } from "../EmptyPageContent";
 import { getRandomInt } from "../../helpers/getRandomInt";
+import { TextBlockModel } from "../../types/TextBlock.model";
+import { CalloutModel } from "../../types/Callout.model";
+import { SectionModel } from "../../types/Section.model";
+import { SectionType } from "../../types/SectionType.enum";
+
+const filterOnPageId = <T extends { pageId: string }>(array: T[], id: string): T[] =>
+  array.filter((item) => item.pageId === id);
 
 export const PageIdContext = createContext("");
 
 export const Page = () => {
   const { id } = useParams<{ id: string }>();
-
   const [fileBlob, setFileBlob] = useState(null);
   const [visibleInputComment, setVisibleInputComment] = useState(false);
   const dispatch = useAppDispatch();
   const page = useAppSelector((state) => state.pages.pages.find((page) => page.id === id));
-  const textSections = useAppSelector((state) => state.textBlocks.textBlocks);
-  const callouts = useAppSelector((state) => state.callouts.callouts);
+  const textSections = useAppSelector((state) => filterOnPageId(state.textBlocks.textBlocks, id));
+  const callouts = useAppSelector((state) => filterOnPageId(state.callouts.callouts, id));
+  const sections: SectionModel[] = [...textSections, ...callouts].sort((a, b) => a.order - b.order);
 
   const onAddComment = (text): void => {
     dispatch(fetchAddComment({ text, pageId: id, imageBlob: fileBlob }));
@@ -141,26 +148,36 @@ export const Page = () => {
             <CountResolvedComments pageId={page.id} />
 
             <PageIdContext.Provider value={page.id}>
-              {callouts.map((item) => (
-                <CalloutSection
-                  calloutId={item.id}
-                  text={item.text}
-                  imageClass={item.imageClass}
-                  key={item.id}
-                />
-              ))}
-              {textSections.map((item) => (
-                <TextSection
-                  text={item.text}
-                  order={item.order}
-                  textSectionId={item.id}
-                  key={item.id}
-                />
-              ))}
+              {sections.map((section) => {
+                switch (section.type) {
+                  case SectionType.TextBlock:
+                    return (
+                      <TextSection
+                        text={section.text}
+                        order={section.order}
+                        textSectionId={section.id}
+                        nextOrder={+sections.length}
+                        key={section.id}
+                      />
+                    );
+                  case SectionType.Callout:
+                    return (
+                      <CalloutSection
+                        calloutId={section.id}
+                        text={section.text}
+                        imageClass={section.imageClass}
+                        nextOrder={+sections.length}
+                        key={section.id}
+                      />
+                    );
+                  default:
+                    return null;
+                }
+              })}
             </PageIdContext.Provider>
           </div>
 
-          {textSections.length === 0 && callouts.length === 0 && (
+          {textSections.length === 0 && (
             <div className="content-centring">
               <EmptyPageContent pageId={page.id} />
             </div>

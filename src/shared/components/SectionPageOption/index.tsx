@@ -5,9 +5,10 @@ import { useModal } from "../../../hooks/useModal";
 
 interface Props {
   refContainer: MutableRefObject<Element>;
+  nextOrder: number;
 }
 
-export const SectionPageOption: FC<Props> = ({ refContainer }) => {
+export const SectionPageOption: FC<Props> = ({ refContainer, nextOrder }) => {
   const [visibleSectionPageOption, setVisibleSectionPageOption] = useState(false);
   const { title, position, isOpenModal, openModal, closeModal } = useModal({
     title: "addBlock",
@@ -36,6 +37,7 @@ export const SectionPageOption: FC<Props> = ({ refContainer }) => {
       </StyledSectionPageOption>
 
       <ModalAddBlock
+        nextOrder={nextOrder}
         title={title}
         isOpenModal={isOpenModal}
         position={position}

@@ -1,4 +1,4 @@
-import React, { FC, useContext, useEffect, useRef, useState } from "react";
+import React, { createContext, FC, useContext, useEffect, useRef, useState } from "react";
 import { StyledTextSection, StyledTextSectionContainer } from "./Styles";
 import { SectionPageOption } from "../SectionPageOption";
 import { useAppDispatch } from "../../../store/hooks";
@@ -9,11 +9,17 @@ import {
 } from "../../../store/text-block/textBlockThunks";
 import { PageIdContext } from "../../../components/Page";
 
-export const TextSection: FC<{
+interface Prop {
   text: string;
   order: number;
   textSectionId: string;
-}> = ({ text, order, textSectionId }) => {
+  nextOrder: number;
+}
+
+export const NextOrder = createContext(0);
+export const TextBlockIdContext = createContext("");
+
+export const TextSection: FC<Prop> = ({ text, order, textSectionId, nextOrder }) => {
   const pageId = useContext(PageIdContext);
   const [textValue] = useState(text);
   const dispatch = useAppDispatch();
@@ -31,7 +37,7 @@ export const TextSection: FC<{
     }
 
     if (isPressedEnter) {
-      dispatch(fetchAddTextBlock({ pageId, text: "", order: 0 }));
+      dispatch(fetchAddTextBlock({ pageId, text: "", order: nextOrder }));
       return;
     }
   };
@@ -43,7 +49,6 @@ export const TextSection: FC<{
         fetchChangeTextBlock({
           text: event.target.textContent,
           pageId: pageId,
-          order: order,
           id: textSectionId,
         }),
       );
@@ -62,7 +67,9 @@ export const TextSection: FC<{
     <>
       <StyledTextSectionContainer ref={textSectionContainerRef}>
         <div className="page-option">
-          <SectionPageOption refContainer={textSectionContainerRef} />
+          <TextBlockIdContext.Provider value={textSectionId}>
+            <SectionPageOption refContainer={textSectionContainerRef} nextOrder={nextOrder} />
+          </TextBlockIdContext.Provider>
         </div>
 
         <StyledTextSection

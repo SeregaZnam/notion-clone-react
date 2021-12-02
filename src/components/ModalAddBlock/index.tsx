@@ -8,23 +8,36 @@ import {
   StylesListItem,
 } from "./Styles";
 import { useAppDispatch } from "../../store/hooks";
-import { fetchAddTextBlock } from "../../store/text-block/textBlockThunks";
+import { fetchAddTextBlock, fetchRemoveTextBlock } from "../../store/text-block/textBlockThunks";
 import { PageIdContext } from "../Page";
 import { fetchAddCallout } from "../../store/callout/calloutSliceThunks";
+import { TextBlockIdContext } from "../../shared/components/TextSection";
 
 interface Props {
+  nextOrder: number;
   title: string;
   position: PositionModel;
   isOpenModal: boolean;
   closeModal: () => void;
 }
 
-export const ModalAddBlock: FC<Props> = ({ title, isOpenModal, position, closeModal }) => {
+export const ModalAddBlock: FC<Props> = ({
+  nextOrder,
+  title,
+  isOpenModal,
+  position,
+  closeModal,
+}) => {
   const pageId = useContext(PageIdContext);
+  const textBlockId = useContext(TextBlockIdContext);
   const dispatch = useAppDispatch();
 
   const addCallout = () => {
-    dispatch(fetchAddCallout({ pageId, text: "", order: 0 }));
+    if (textBlockId) {
+      dispatch(fetchRemoveTextBlock({ id: textBlockId }));
+    }
+
+    dispatch(fetchAddCallout({ pageId, text: "", order: nextOrder }));
     closeModal();
   };
 

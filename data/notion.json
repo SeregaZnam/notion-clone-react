@@ -42,29 +42,12 @@
   "comments": [],
   "textBlocks": [
     {
-      "text": "Text something about feature",
+      "text": "",
       "pageId": "6ac57c99-d9b6-42e7-beec-50f848af2247",
       "order": 0,
-      "id": "c1a95551-9db9-42b4-824b-0ef5100ca39a",
+      "id": "3052b2ce-2ce6-4462-b723-32211eeec9e1",
       "type": "TextBlock"
     }
   ],
-  "callouts": [
-    {
-      "text": "The modern day reading list includes more than just books. We've created a dashboard to help you track books, articles, podcasts, and videos. Each media type has its own view based on the Type property. ",
-      "order": 0,
-      "pageId": "6ac57c99-d9b6-42e7-beec-50f848af2247",
-      "imageClass": "icon-14",
-      "id": "385259ac-5f93-47d0-81e5-fae72fd6e994",
-      "type": "Callout"
-    },
-    {
-      "text": "Click on Articles to see what other views might have in store or add your own",
-      "order": 0,
-      "pageId": "6ac57c99-d9b6-42e7-beec-50f848af2247",
-      "imageClass": "icon-16",
-      "id": "4a2572fd-6086-46e8-b45d-06cba0407499",
-      "type": "Callout"
-    }
-  ]
+  "callouts": []
 }
