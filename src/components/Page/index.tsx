@@ -160,7 +160,7 @@ export const Page = () => {
             </PageIdContext.Provider>
           </div>
 
-          {textSections.length === 0 && (
+          {textSections.length === 0 && callouts.length === 0 && (
             <div className="content-centring">
               <EmptyPageContent pageId={page.id} />
             </div>

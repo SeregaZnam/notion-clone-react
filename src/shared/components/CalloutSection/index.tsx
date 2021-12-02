@@ -10,7 +10,11 @@ import { SmallIcon } from "../SmallIcon";
 import { fetchAddTextBlock, fetchRemoveTextBlock } from "../../../store/text-block/textBlockThunks";
 import { useAppDispatch } from "../../../store/hooks";
 import { PageIdContext } from "../../../components/Page";
-import { fetchCallouts, fetchRemoveCallout } from "../../../store/callout/calloutSliceThunks";
+import {
+  fetchCallouts,
+  fetchChangeCallout,
+  fetchRemoveCallout,
+} from "../../../store/callout/calloutSliceThunks";
 
 interface Props {
   calloutId: string;
@@ -21,9 +25,11 @@ interface Props {
 export const CalloutIdContext = createContext("");
 
 export const CalloutSection: FC<Props> = memo(({ calloutId, text, imageClass }) => {
+  const [textValue] = useState(text);
   const textSectionContainerRef = useRef<HTMLDivElement>();
   const dispatch = useAppDispatch();
   const pageId = useContext(PageIdContext);
+  const calloutSectionRef = useRef<HTMLDivElement>();
 
   const handleKeyPress = (event) => {
     const targetElement = event.target;
@@ -40,6 +46,27 @@ export const CalloutSection: FC<Props> = memo(({ calloutId, text, imageClass }) 
     }
   };
 
+  useEffect(() => {
+    const calloutSectionInstance = calloutSectionRef.current;
+    const handle = (event) =>
+      dispatch(
+        fetchChangeCallout({
+          id: calloutId,
+          text: event.target.textContent,
+          order: 0,
+        }),
+      );
+    calloutSectionInstance.addEventListener("input", handle);
+
+    return () => calloutSectionInstance.removeEventListener("input", handle);
+  }, []);
+
+  useEffect(() => {
+    if (text === "") {
+      calloutSectionRef.current.focus();
+    }
+  }, []);
+
   return (
     <>
       <StyledCalloutSectionContainer ref={textSectionContainerRef}>
@@ -51,12 +78,13 @@ export const CalloutSection: FC<Props> = memo(({ calloutId, text, imageClass }) 
           <StyledTextSection>
             <SmallIcon iconClass={imageClass} />
             <StyledTextContent
+              ref={calloutSectionRef}
               contentEditable="true"
               suppressContentEditableWarning={true}
               onKeyDownCapture={handleKeyPress}
               placeholder="Type something..."
             >
-              {text}
+              {textValue}
             </StyledTextContent>
           </StyledTextSection>
         </CalloutIdContext.Provider>
