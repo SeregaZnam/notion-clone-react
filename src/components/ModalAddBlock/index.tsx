@@ -23,6 +23,11 @@ export const ModalAddBlock: FC<Props> = ({ title, isOpenModal, position, closeMo
   const pageId = useContext(PageIdContext);
   const dispatch = useAppDispatch();
 
+  const addCallout = () => {
+    dispatch(fetchAddCallout({ pageId, text: "", order: 0 }));
+    closeModal();
+  };
+
   return (
     <Modal title={title} isOpen={isOpenModal} position={position}>
       <StyledModalContainer>
@@ -35,7 +40,7 @@ export const ModalAddBlock: FC<Props> = ({ title, isOpenModal, position, closeMo
               <span className="content-block-describe">Just start writing with plain text.</span>
             </div>
           </StylesListItem>
-          <StylesListItem onClick={() => dispatch(fetchAddCallout({ pageId, text: "", order: 0 }))}>
+          <StylesListItem onClick={addCallout}>
             <StyledCalendarViewDayOutlinedIcon />
             <div className="content-block">
               <h4>Callout</h4>

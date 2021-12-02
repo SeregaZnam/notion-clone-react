@@ -1,5 +1,5 @@
 import { Modal, PositionModel } from "../../shared/components/Modal";
-import { FC } from "react";
+import { FC, useContext } from "react";
 import {
   StyledContentMenu,
   StyledFilterInput,
@@ -9,15 +9,35 @@ import {
   StyledModalContainer,
   StyledSentimentSatisfiedAltIcon,
 } from "./Styles";
-import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
+import { PageIdContext } from "../Page";
+import { CalloutIdContext } from "../../shared/components/CalloutSection";
+import { useAppDispatch } from "../../store/hooks";
+import { fetchChangeCallout } from "../../store/callout/calloutSliceThunks";
 
 interface Props {
   title: string;
   position: PositionModel;
   isOpenModal: boolean;
+  closeModal: () => void;
 }
 
-export const ModalIconsMenu: FC<Props> = ({ title, isOpenModal, position }) => {
+export const ModalIconsMenu: FC<Props> = ({ title, isOpenModal, position, closeModal }) => {
+  const pageId = useContext(PageIdContext);
+  const calloutId = useContext(CalloutIdContext);
+  const dispatch = useAppDispatch();
+
+  const setIconCallout = (imageClass: string) => {
+    console.log(imageClass);
+    dispatch(
+      fetchChangeCallout({
+        imageClass,
+        id: calloutId,
+        pageId: pageId,
+      }),
+    );
+    closeModal();
+  };
+
   return (
     <Modal title={title} isOpen={isOpenModal} position={position}>
       <StyledModalContainer>
@@ -47,8 +67,11 @@ export const ModalIconsMenu: FC<Props> = ({ title, isOpenModal, position }) => {
               {Array(20)
                 .fill("icon")
                 .map((item, index) => (
-                  <div className="icons-block-recent-icon">
-                    <StyledIcon className={`${item}-${++index}`} />
+                  <div
+                    className="icons-block-recent-icon"
+                    onClick={() => setIconCallout(`${item}-${index + 1}`)}
+                  >
+                    <StyledIcon className={`${item}-${index + 1}`} />
                   </div>
                 ))}
             </div>

@@ -4,15 +4,14 @@ import { PageModel } from "../../../types/Page.model";
 import { ModalIconsMenu } from "../../../components/ModalIconsMenu";
 import { useModal } from "../../../hooks/useModal";
 
-export const SmallIcon: FC<Partial<Pick<PageModel, "iconSrc" | "iconClass">>> = ({
-  iconClass,
-  iconSrc,
-}) => {
+type Props = Partial<Pick<PageModel, "iconSrc" | "iconClass">>;
+
+export const SmallIcon: FC<Props> = ({ iconClass, iconSrc }) => {
   let pageIconTemplate = null;
   const { title, position, isOpenModal, openModal, closeModal } = useModal({
     title: "iconsMenu",
   });
-  console.log(iconClass);
+
   if (iconSrc) {
     pageIconTemplate = <StyledPageIconImg src={iconSrc} />;
   } else if (iconClass) {
@@ -25,7 +24,12 @@ export const SmallIcon: FC<Partial<Pick<PageModel, "iconSrc" | "iconClass">>> = 
         {pageIconTemplate}
       </StylesIconContainer>
 
-      <ModalIconsMenu title={title} position={position} isOpenModal={isOpenModal} />
+      <ModalIconsMenu
+        title={title}
+        position={position}
+        isOpenModal={isOpenModal}
+        closeModal={closeModal}
+      />
     </>
   );
 };

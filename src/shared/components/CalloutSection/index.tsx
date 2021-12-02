@@ -1,4 +1,4 @@
-import React, { FC, memo, useContext, useEffect, useRef, useState } from "react";
+import React, { createContext, FC, memo, useContext, useEffect, useRef, useState } from "react";
 import { SectionPageOption } from "../SectionPageOption";
 import {
   StyledIcon,
@@ -17,6 +17,8 @@ interface Props {
   imageClass: string;
   text: string;
 }
+
+export const CalloutIdContext = createContext("");
 
 export const CalloutSection: FC<Props> = memo(({ calloutId, text, imageClass }) => {
   const textSectionContainerRef = useRef<HTMLDivElement>();
@@ -45,17 +47,19 @@ export const CalloutSection: FC<Props> = memo(({ calloutId, text, imageClass }) 
           <SectionPageOption refContainer={textSectionContainerRef} />
         </div>
 
-        <StyledTextSection>
-          <SmallIcon iconClass={imageClass} />
-          <StyledTextContent
-            contentEditable="true"
-            suppressContentEditableWarning={true}
-            onKeyDownCapture={handleKeyPress}
-            placeholder="Type something..."
-          >
-            {text}
-          </StyledTextContent>
-        </StyledTextSection>
+        <CalloutIdContext.Provider value={calloutId}>
+          <StyledTextSection>
+            <SmallIcon iconClass={imageClass} />
+            <StyledTextContent
+              contentEditable="true"
+              suppressContentEditableWarning={true}
+              onKeyDownCapture={handleKeyPress}
+              placeholder="Type something..."
+            >
+              {text}
+            </StyledTextContent>
+          </StyledTextSection>
+        </CalloutIdContext.Provider>
       </StyledCalloutSectionContainer>
     </>
   );

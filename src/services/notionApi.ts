@@ -97,6 +97,16 @@ export namespace NotionApi {
         method: "DELETE",
       });
     }
+
+    export function changePageCallouts(callout: CalloutModel): Promise<Response> {
+      const updatedCallout = JSON.stringify(callout);
+
+      return fetch(`${baseUrl}/callouts/${callout.id}`, {
+        headers,
+        method: "PUT",
+        body: updatedCallout,
+      });
+    }
   }
 
   export namespace TextBlocks {

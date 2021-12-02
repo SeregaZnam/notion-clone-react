@@ -1,6 +1,11 @@
 import { CalloutModel } from "../../types/Callout.model";
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchAddCallout, fetchCallouts, fetchRemoveCallout } from "./calloutSliceThunks";
+import {
+  fetchAddCallout,
+  fetchCallouts,
+  fetchChangeCallout,
+  fetchRemoveCallout,
+} from "./calloutSliceThunks";
 
 interface CalloutState {
   callouts: CalloutModel[];
@@ -25,6 +30,12 @@ export const calloutSlice = createSlice({
 
     builder.addCase(fetchRemoveCallout.fulfilled, (state, action) => {
       state.callouts = state.callouts.filter((callout) => callout.id !== action.meta.arg.id);
+    });
+
+    builder.addCase(fetchChangeCallout.fulfilled, (state, action) => {
+      state.callouts = state.callouts.map((callout) =>
+        callout.id === action.payload.id ? action.payload : callout,
+      );
     });
   },
 });
