@@ -11,12 +11,12 @@ interface Props {
   calloutId: string;
   imageClass: string;
   text: string;
-  nextOrder: number;
+  order: number;
 }
 
 export const CalloutIdContext = createContext("");
 
-export const CalloutSection: FC<Props> = memo(({ calloutId, text, imageClass, nextOrder }) => {
+export const CalloutSection: FC<Props> = memo(({ calloutId, text, imageClass, order }) => {
   const [textValue] = useState(text);
   const textSectionContainerRef = useRef<HTMLDivElement>();
   const dispatch = useAppDispatch();
@@ -34,7 +34,8 @@ export const CalloutSection: FC<Props> = memo(({ calloutId, text, imageClass, ne
     }
 
     if (isPressedEnter) {
-      dispatch(fetchAddTextBlock({ pageId, text: "", order: 0 }));
+      event.preventDefault();
+      dispatch(fetchAddTextBlock({ pageId, order: order + 1, text: "" }));
     }
   };
 
@@ -45,7 +46,6 @@ export const CalloutSection: FC<Props> = memo(({ calloutId, text, imageClass, ne
         fetchChangeCallout({
           id: calloutId,
           text: event.target.textContent,
-          order: 0,
         }),
       );
     calloutSectionInstance.addEventListener("input", handle);
@@ -63,9 +63,7 @@ export const CalloutSection: FC<Props> = memo(({ calloutId, text, imageClass, ne
     <>
       <StyledCalloutSectionContainer ref={textSectionContainerRef}>
         <div className="page-option">
-
-          <SectionPageOption refContainer={textSectionContainerRef} nextOrder={nextOrder} />
-
+          <SectionPageOption refContainer={textSectionContainerRef} nextOrder={order + 1} />
         </div>
 
         <CalloutIdContext.Provider value={calloutId}>

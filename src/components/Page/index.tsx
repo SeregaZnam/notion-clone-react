@@ -156,7 +156,6 @@ export const Page = () => {
                         text={section.text}
                         order={section.order}
                         textSectionId={section.id}
-                        nextOrder={+sections.length}
                         key={section.id}
                       />
                     );
@@ -166,8 +165,8 @@ export const Page = () => {
                         calloutId={section.id}
                         text={section.text}
                         imageClass={section.imageClass}
-                        nextOrder={+sections.length}
                         key={section.id}
+                        order={section.order}
                       />
                     );
                   default:
@@ -177,7 +176,7 @@ export const Page = () => {
             </PageIdContext.Provider>
           </div>
 
-          {textSections.length === 0 && (
+          {sections.length === 0 && (
             <div className="content-centring">
               <EmptyPageContent pageId={page.id} />
             </div>

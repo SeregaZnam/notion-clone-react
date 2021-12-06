@@ -13,13 +13,12 @@ interface Prop {
   text: string;
   order: number;
   textSectionId: string;
-  nextOrder: number;
 }
 
 export const NextOrder = createContext(0);
 export const TextBlockIdContext = createContext("");
 
-export const TextSection: FC<Prop> = ({ text, order, textSectionId, nextOrder }) => {
+export const TextSection: FC<Prop> = ({ text, order, textSectionId }) => {
   const pageId = useContext(PageIdContext);
   const [textValue] = useState(text);
   const dispatch = useAppDispatch();
@@ -37,8 +36,8 @@ export const TextSection: FC<Prop> = ({ text, order, textSectionId, nextOrder })
     }
 
     if (isPressedEnter) {
-      dispatch(fetchAddTextBlock({ pageId, text: "", order: nextOrder }));
-      return;
+      event.preventDefault();
+      dispatch(fetchAddTextBlock({ pageId, text: "", order: order + 1 }));
     }
   };
 
@@ -68,7 +67,7 @@ export const TextSection: FC<Prop> = ({ text, order, textSectionId, nextOrder })
       <StyledTextSectionContainer ref={textSectionContainerRef}>
         <div className="page-option">
           <TextBlockIdContext.Provider value={textSectionId}>
-            <SectionPageOption refContainer={textSectionContainerRef} nextOrder={nextOrder} />
+            <SectionPageOption refContainer={textSectionContainerRef} nextOrder={order + 1} />
           </TextBlockIdContext.Provider>
         </div>
 
