@@ -7,10 +7,10 @@ import InsertLinkOutlinedIcon from "@mui/icons-material/InsertLinkOutlined";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import FormatPaintOutlinedIcon from "@mui/icons-material/FormatPaintOutlined";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 
 export const StyledModalContainer = styled.div`
   min-width: 240px;
-  padding-top: 6px;
   border-radius: 5px;
   font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
     "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
@@ -23,11 +23,15 @@ export const StyledModalContainer = styled.div`
   .filter-input {
     padding: 6px 14px 6px;
   }
+
+  .part-container {
+    padding: 6px 0;
+  }
 `;
 
 export const StyledInput = styled.input`
   width: 100%;
-  margin: 8px 0;
+  margin-top: 8px;
   box-sizing: border-box;
   box-shadow: rgb(15 15 15 / 10%) 0 0 0 1px inset;
   height: 28px;
@@ -56,6 +60,7 @@ export const StylesListItem = styled.li`
   box-sizing: border-box;
   color: rgb(55, 53, 47);
   fill: currentcolor;
+  white-space: nowrap;
 
   :hover {
     cursor: pointer;
@@ -64,6 +69,26 @@ export const StylesListItem = styled.li`
 
   .item-text {
     margin-left: 5px;
+  }
+
+  .content-right {
+    width: 100%;
+    text-align: right;
+    color: rgba(55, 53, 47, 0.4);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+`;
+
+export const StyledUserPublic = styled.div`
+  padding: 6px 14px;
+  color: rgba(55, 53, 47, 0.4);
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+
+  .public-edited {
+    margin: 0 0 4px;
   }
 `;
 
@@ -121,5 +146,13 @@ export const StyledFormatPaintOutlinedIcon = styled(FormatPaintOutlinedIcon)`
   && {
     width: 19px;
     height: 19px;
+  }
+`;
+
+export const StyledArrowRightIcon = styled(ArrowRightIcon)`
+  && {
+    width: 19px;
+    height: 19px;
+    fill: rgba(55, 53, 47, 0.4);
   }
 `;

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { FC, useState } from "react";
 import { Modal, PositionModel } from "../../shared/components/Modal";
 import {
+  StyledArrowRightIcon,
   StyledAutorenewOutlinedIcon,
   StyledCommentOutlinedIcon,
   StyledContentCopyIcon,
@@ -11,6 +12,7 @@ import {
   StyledKeyboardReturnIcon,
   StyledModalContainer,
   StyledSummarizeOutlinedIcon,
+  StyledUserPublic,
   StylesList,
   StylesListItem,
 } from "./Styles";
@@ -23,59 +25,113 @@ interface Props {
   closeModal: () => void;
 }
 
-export const ModalSectionMenu = ({ title, isOpenModal, position, closeModal }) => {
+export const ModalSectionMenu: FC<Props> = ({ title, isOpenModal, position, closeModal }) => {
+  const [filterValue, setFilterValue] = useState("");
+
   const onHandleInput = (event) => {
-    console.log(1);
+    setFilterValue(event.target.value);
+  };
+
+  const onIncludesSubstring = (itemValue: string): boolean => {
+    return itemValue.toLocaleLowerCase().includes(filterValue);
   };
 
   return (
     <Modal title={title} isOpen={isOpenModal} position={position}>
       <StyledModalContainer>
         <div className="filter-input">
-          <StyledInput type="text" placeholder="Filter actions..." onInput={onHandleInput} />
+          <StyledInput
+            type="text"
+            placeholder="Filter actions..."
+            value={filterValue}
+            onInput={onHandleInput}
+          />
         </div>
         <StylesList>
-          <StylesListItem onClick={closeModal}>
-            <StyledDeleteOutlineOutlinedIcon />
-            <span className="item-text">Delete</span>
-          </StylesListItem>
-          <StylesListItem>
-            <StyledContentCopyIcon />
-            <span className="item-text">Duplicate</span>
-          </StylesListItem>
-          <StylesListItem>
-            <StyledAutorenewOutlinedIcon />
-            <span className="item-text">Turn into</span>
-          </StylesListItem>
-          <StylesListItem>
-            <StyledSummarizeOutlinedIcon />
-            <span className="item-text">Turn into page in</span>
-          </StylesListItem>
-          <StylesListItem>
-            <StyledInsertLinkOutlinedIcon />
-            <span className="item-text">Copy link</span>
-          </StylesListItem>
-          <HorizontalLine />
-          <StylesListItem>
-            <StyledKeyboardReturnIcon />
-            <span className="item-text">Move to</span>
-          </StylesListItem>
-          <HorizontalLine />
-          <StylesListItem>
-            <StyledCommentOutlinedIcon />
-            <span className="item-text">Comment</span>
-          </StylesListItem>
-          <HorizontalLine />
-          <StylesListItem>
-            <StyledFormatPaintOutlinedIcon />
-            <span className="item-text">Color</span>
-          </StylesListItem>
+          <div className="part-container">
+            {onIncludesSubstring("Delete") && (
+              <StylesListItem onClick={closeModal}>
+                <StyledDeleteOutlineOutlinedIcon />
+                <span className="item-text">Delete</span>
+                <div className="content-right">Del</div>
+              </StylesListItem>
+            )}
+            {onIncludesSubstring("Duplicate") && (
+              <StylesListItem>
+                <StyledContentCopyIcon />
+                <span className="item-text">Duplicate</span>
+                <div className="content-right">Ctrl+D</div>
+              </StylesListItem>
+            )}
+            {onIncludesSubstring("Turn into") && (
+              <StylesListItem>
+                <StyledAutorenewOutlinedIcon />
+                <span className="item-text">Turn into</span>
+                <div className="content-right">
+                  <StyledArrowRightIcon />
+                </div>
+              </StylesListItem>
+            )}
+            {onIncludesSubstring("Turn into page in") && (
+              <StylesListItem>
+                <StyledSummarizeOutlinedIcon />
+                <span className="item-text">Turn into page in</span>
+                <div className="content-right">
+                  <StyledArrowRightIcon />
+                </div>
+              </StylesListItem>
+            )}
+            {onIncludesSubstring("Copy link") && (
+              <StylesListItem>
+                <StyledInsertLinkOutlinedIcon />
+                <span className="item-text">Copy link</span>
+              </StylesListItem>
+            )}
+          </div>
+          {onIncludesSubstring("Move to") && (
+            <>
+              <HorizontalLine />
+              <div className="part-container">
+                <StylesListItem>
+                  <StyledKeyboardReturnIcon />
+                  <span className="item-text">Move to</span>
+                  <div className="content-right">Ctrl+Shift+P</div>
+                </StylesListItem>
+              </div>
+            </>
+          )}
+          {onIncludesSubstring("Comment") && (
+            <>
+              <HorizontalLine />
+              <div className="part-container">
+                <StylesListItem>
+                  <StyledCommentOutlinedIcon />
+                  <span className="item-text">Comment</span>
+                  <div className="content-right">Ctrl+Shift+M</div>
+                </StylesListItem>
+              </div>
+            </>
+          )}
+          {onIncludesSubstring("Color") && (
+            <>
+              <HorizontalLine />
+              <div className="part-container">
+                <StylesListItem>
+                  <StyledFormatPaintOutlinedIcon />
+                  <span className="item-text">Color</span>
+                  <div className="content-right">
+                    <StyledArrowRightIcon />
+                  </div>
+                </StylesListItem>
+              </div>
+            </>
+          )}
           <HorizontalLine />
         </StylesList>
-        <div>
-          <span>Last edited by Sergey</span>
+        <StyledUserPublic>
+          <span className="public-edited">Last edited by Sergey</span>
           <span>11/26/2021</span>
-        </div>
+        </StyledUserPublic>
       </StyledModalContainer>
     </Modal>
   );
