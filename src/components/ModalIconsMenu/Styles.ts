@@ -67,13 +67,6 @@ export const StyledSentimentSatisfiedAltIcon = styled(SentimentSatisfiedAltIcon)
   color: rgba(55, 53, 47, 0.4);
 `;
 
-export const StyledHorizontalLine = styled.div`
-  width: 100%;
-  height: 1px;
-  background: rgba(55, 53, 47, 0.09);
-  margin-bottom: 8px;
-`;
-
 export const StyledContentMenu = styled.div`
   padding: 5px 15px;
 

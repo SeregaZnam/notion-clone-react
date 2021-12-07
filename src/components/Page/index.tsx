@@ -1,13 +1,7 @@
 import ImageIcon from "@mui/icons-material/Image";
 import MessageIcon from "@mui/icons-material/Message";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
-import {
-  StyledBoxIcons,
-  StyledControlsBlock,
-  StyledHorizontalLine,
-  StyledPage,
-  StyledPageIcon,
-} from "./Styles";
+import { StyledBoxIcons, StyledControlsBlock, StyledPage, StyledPageIcon } from "./Styles";
 import { IconControl } from "../IconControl";
 import { TitlePage } from "../TitlePage";
 import { useParams } from "react-router";
@@ -23,18 +17,16 @@ import {
   fetchChangeComment,
   fetchComments,
 } from "../../store/comment/commentSliceThunks";
-import { usePrev } from "./usePrev";
 import { TopPagePanelOptions } from "../TopPagePanelOptions";
 import { CoverPage } from "../CoverPage";
 import { fetchCallouts } from "../../store/callout/calloutSliceThunks";
-import { fetchAddTextBlock, fetchTextBlocks } from "../../store/text-block/textBlockThunks";
+import { fetchTextBlocks } from "../../store/text-block/textBlockThunks";
 import { TextSection } from "../../shared/components/TextSection";
 import { EmptyPageContent } from "../EmptyPageContent";
 import { getRandomInt } from "../../helpers/getRandomInt";
-import { TextBlockModel } from "../../types/TextBlock.model";
-import { CalloutModel } from "../../types/Callout.model";
 import { SectionModel } from "../../types/Section.model";
 import { SectionType } from "../../types/SectionType.enum";
+import { HorizontalLine } from "../../shared/components/HorizontalLine";
 
 const filterOnPageId = <T extends { pageId: string }>(array: T[], id: string): T[] =>
   array.filter((item) => item.pageId === id);
@@ -142,7 +134,7 @@ export const Page = () => {
                   autoFocus={true}
                   setFileBlob={setFileBlob}
                 />
-                <StyledHorizontalLine />
+                <HorizontalLine />
               </>
             )}
             <CountResolvedComments pageId={page.id} />

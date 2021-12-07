@@ -65,10 +65,3 @@ export const StyledControlsBlock = styled.div`
     }
   }
 `;
-
-export const StyledHorizontalLine = styled.div`
-  width: 100%;
-  height: 1px;
-  background: rgba(55, 53, 47, 0.09);
-  margin-bottom: 8px;
-`;

@@ -4,6 +4,9 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import AutorenewOutlinedIcon from "@mui/icons-material/AutorenewOutlined";
 import SummarizeOutlinedIcon from "@mui/icons-material/SummarizeOutlined";
 import InsertLinkOutlinedIcon from "@mui/icons-material/InsertLinkOutlined";
+import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
+import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
+import FormatPaintOutlinedIcon from "@mui/icons-material/FormatPaintOutlined";
 
 export const StyledModalContainer = styled.div`
   min-width: 240px;
@@ -39,13 +42,20 @@ export const StyledInput = styled.input`
 `;
 
 export const StylesList = styled.ul`
-  padding: 0 14px;
+  //padding: 0 14px;
 `;
 
 export const StylesListItem = styled.li`
   display: flex;
-  padding: 4px 0;
+  padding: 0 14px;
   align-items: center;
+  line-height: 120%;
+  width: 100%;
+  min-height: 28px;
+  font-size: 14px;
+  box-sizing: border-box;
+  color: rgb(55, 53, 47);
+  fill: currentcolor;
 
   :hover {
     cursor: pointer;
@@ -59,35 +69,57 @@ export const StylesListItem = styled.li`
 
 export const StyledDeleteOutlineOutlinedIcon = styled(DeleteOutlineOutlinedIcon)`
   && {
-    width: 21px;
-    height: 21px;
+    width: 19px;
+    height: 19px;
   }
 `;
 
 export const StyledContentCopyIcon = styled(ContentCopyIcon)`
   && {
-    width: 21px;
-    height: 21px;
+    width: 19px;
+    height: 19px;
   }
 `;
 
 export const StyledAutorenewOutlinedIcon = styled(AutorenewOutlinedIcon)`
   && {
-    width: 21px;
-    height: 21px;
+    width: 19px;
+    height: 19px;
   }
 `;
 
 export const StyledSummarizeOutlinedIcon = styled(SummarizeOutlinedIcon)`
   && {
-    width: 21px;
-    height: 21px;
+    width: 19px;
+    height: 19px;
   }
 `;
 
 export const StyledInsertLinkOutlinedIcon = styled(InsertLinkOutlinedIcon)`
   && {
-    width: 21px;
-    height: 21px;
+    width: 19px;
+    height: 19px;
+  }
+`;
+
+export const StyledKeyboardReturnIcon = styled(KeyboardReturnIcon)`
+  && {
+    width: 19px;
+    height: 19px;
+    transform: rotate(180deg);
+  }
+`;
+
+export const StyledCommentOutlinedIcon = styled(CommentOutlinedIcon)`
+  && {
+    width: 19px;
+    height: 19px;
+  }
+`;
+
+export const StyledFormatPaintOutlinedIcon = styled(FormatPaintOutlinedIcon)`
+  && {
+    width: 19px;
+    height: 19px;
   }
 `;

@@ -3,7 +3,6 @@ import { FC, useContext } from "react";
 import {
   StyledContentMenu,
   StyledFilterInput,
-  StyledHorizontalLine,
   StyledIcon,
   StyledIconsBlockTitle,
   StyledModalContainer,
@@ -13,6 +12,7 @@ import { PageIdContext } from "../Page";
 import { CalloutIdContext } from "../../shared/components/CalloutSection";
 import { useAppDispatch } from "../../store/hooks";
 import { fetchChangeCallout } from "../../store/callout/calloutSliceThunks";
+import { HorizontalLine } from "../../shared/components/HorizontalLine";
 
 interface Props {
   title: string;
@@ -52,7 +52,7 @@ export const ModalIconsMenu: FC<Props> = ({ title, isOpenModal, position, closeM
             <span className="menu-header-random-text">Random</span>
           </div>
         </div>
-        <StyledHorizontalLine />
+        <HorizontalLine />
         <StyledContentMenu>
           <StyledFilterInput type="text" placeholder="Filter..." />
           <div className="icons-block-recent">

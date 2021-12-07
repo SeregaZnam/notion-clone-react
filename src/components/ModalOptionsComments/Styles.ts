@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { StyledHorizontalLine } from "../Page/Styles";
+import { StyledHorizontalLine } from "../../shared/components/HorizontalLine/Styles";
 
 export const StyledModalContainer = styled.div`
   min-width: 180px;

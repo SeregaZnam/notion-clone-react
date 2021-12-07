@@ -4,8 +4,8 @@ import { Modal, PositionModel } from "../../shared/components/Modal";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import InsertLinkIcon from "@mui/icons-material/InsertLink";
-import { StyledHorizontalLine } from "../Page/Styles";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import { HorizontalLine } from "../../shared/components/HorizontalLine";
 
 interface Props {
   title: string;
@@ -36,7 +36,7 @@ export const ModalOptionsComments: FC<Props> = ({
             <InsertLinkIcon />
             <span className="option-text">Copy link</span>
           </StyledLi>
-          <StyledHorizontalLine />
+          <HorizontalLine />
           <StyledLi className="option-learn-comment">
             <HelpOutlineIcon className="option-learn-comment-icon" />
             <span className="options-text">Learn about comments</span>
