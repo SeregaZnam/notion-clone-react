@@ -27,6 +27,7 @@ import { getRandomInt } from "../../helpers/getRandomInt";
 import { SectionModel } from "../../types/Section.model";
 import { SectionType } from "../../types/SectionType.enum";
 import { HorizontalLine } from "../../shared/components/HorizontalLine";
+import { TodoSection } from "../TodoSection";
 
 const filterOnPageId = <T extends { pageId: string }>(array: T[], id: string): T[] =>
   array.filter((item) => item.pageId === id);
@@ -41,7 +42,10 @@ export const Page = () => {
   const page = useAppSelector((state) => state.pages.pages.find((page) => page.id === id));
   const textSections = useAppSelector((state) => filterOnPageId(state.textBlocks.textBlocks, id));
   const callouts = useAppSelector((state) => filterOnPageId(state.callouts.callouts, id));
-  const sections: SectionModel[] = [...textSections, ...callouts].sort((a, b) => a.order - b.order);
+  const todos = useAppSelector((state) => filterOnPageId(state.todo.todos, id));
+  const sections: SectionModel[] = [...textSections, ...callouts, ...todos].sort(
+    (a, b) => a.order - b.order,
+  );
 
   const onAddComment = (text): void => {
     dispatch(fetchAddComment({ text, pageId: id, imageBlob: fileBlob }));
@@ -161,6 +165,8 @@ export const Page = () => {
                         order={section.order}
                       />
                     );
+                  case SectionType.Todo:
+                    return <TodoSection key={section.id} />;
                   default:
                     return null;
                 }

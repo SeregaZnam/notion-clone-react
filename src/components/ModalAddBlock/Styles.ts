@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import TextFieldsIcon from "@mui/icons-material/TextFields";
 import CalendarViewDayOutlinedIcon from "@mui/icons-material/CalendarViewDayOutlined";
+import FactCheckOutlinedIcon from "@mui/icons-material/FactCheckOutlined";
 
 export const StyledModalContainer = styled.div`
   min-width: 314px;
@@ -60,6 +61,18 @@ export const StyledTextFieldsIcon = styled(TextFieldsIcon)`
 `;
 
 export const StyledCalendarViewDayOutlinedIcon = styled(CalendarViewDayOutlinedIcon)`
+  && {
+    display: flex;
+    width: 46px;
+    height: 46px;
+    box-shadow: rgb(15 15 15 / 10%) 0 0 0 1px;
+    border-radius: 3px;
+    color: rgba(55, 53, 47, 0.6);
+    margin-left: 14px;
+  }
+`;
+
+export const StyledFactCheckOutlinedIcon = styled(FactCheckOutlinedIcon)`
   && {
     display: flex;
     width: 46px;

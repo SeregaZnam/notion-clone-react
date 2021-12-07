@@ -2,6 +2,7 @@ import { PageModel } from "../types/Page.model";
 import { CommentModel } from "../types/Comment.model";
 import { CalloutModel } from "../types/Callout.model";
 import { TextBlockModel } from "../types/TextBlock.model";
+import { TodoModel } from "../types/Todo.model";
 
 export namespace NotionApi {
   const baseUrl = "http://localhost:4200";
@@ -141,6 +142,26 @@ export namespace NotionApi {
     export function removeTextBlock(textBlockId: string): Promise<Response> {
       return fetch(`${baseUrl}/textBlocks/${textBlockId}`, {
         method: "DELETE",
+      });
+    }
+  }
+
+  export namespace Todos {
+    export function getTodos(pageId: string): Promise<Response> {
+      const namePropertyPageId: keyof Pick<TodoModel, "pageId"> = "pageId";
+
+      return fetch(`${baseUrl}/todos?${namePropertyPageId}=${pageId}`, {
+        method: "GET",
+      });
+    }
+
+    export function addTodo(newTodo: TodoModel): Promise<Response> {
+      const newPageTodo = JSON.stringify(newTodo);
+
+      return fetch(`${baseUrl}/todos`, {
+        headers,
+        method: "POST",
+        body: newPageTodo,
       });
     }
   }

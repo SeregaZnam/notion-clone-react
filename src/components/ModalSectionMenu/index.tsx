@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { ChangeEvent, FC, useState } from "react";
 import { Modal, PositionModel } from "../../shared/components/Modal";
 import {
   StyledArrowRightIcon,
@@ -13,7 +13,6 @@ import {
   StyledModalContainer,
   StyledSummarizeOutlinedIcon,
   StyledUserPublic,
-  StylesList,
   StylesListItem,
 } from "./Styles";
 import { HorizontalLine } from "../../shared/components/HorizontalLine";
@@ -28,10 +27,6 @@ interface Props {
 export const ModalSectionMenu: FC<Props> = ({ title, isOpenModal, position, closeModal }) => {
   const [filterValue, setFilterValue] = useState("");
 
-  const onHandleInput = (event) => {
-    setFilterValue(event.target.value);
-  };
-
   const onIncludesSubstring = (itemValue: string): boolean => {
     return itemValue.toLocaleLowerCase().includes(filterValue);
   };
@@ -44,10 +39,10 @@ export const ModalSectionMenu: FC<Props> = ({ title, isOpenModal, position, clos
             type="text"
             placeholder="Filter actions..."
             value={filterValue}
-            onInput={onHandleInput}
+            onInput={(event: ChangeEvent<HTMLInputElement>) => setFilterValue(event.target.value)}
           />
         </div>
-        <StylesList>
+        <ul>
           <div className="part-container">
             {onIncludesSubstring("Delete") && (
               <StylesListItem onClick={closeModal}>
@@ -127,7 +122,7 @@ export const ModalSectionMenu: FC<Props> = ({ title, isOpenModal, position, clos
             </>
           )}
           <HorizontalLine />
-        </StylesList>
+        </ul>
         <StyledUserPublic>
           <span className="public-edited">Last edited by Sergey</span>
           <span>11/26/2021</span>

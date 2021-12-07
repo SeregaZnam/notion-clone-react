@@ -2,16 +2,18 @@ import React, { FC, useContext } from "react";
 import { Modal, PositionModel } from "../../shared/components/Modal";
 import {
   StyledCalendarViewDayOutlinedIcon,
+  StyledFactCheckOutlinedIcon,
   StyledHeaderTitle,
   StyledModalContainer,
   StyledTextFieldsIcon,
   StylesListItem,
 } from "./Styles";
 import { useAppDispatch } from "../../store/hooks";
-import { fetchAddTextBlock, fetchRemoveTextBlock } from "../../store/text-block/textBlockThunks";
+import { fetchRemoveTextBlock } from "../../store/text-block/textBlockThunks";
 import { PageIdContext } from "../Page";
 import { fetchAddCallout } from "../../store/callout/calloutSliceThunks";
 import { TextBlockIdContext } from "../../shared/components/TextSection";
+import { fetchAddTodo } from "../../store/todo/todoSliceThunk";
 
 interface Props {
   nextOrder: number;
@@ -32,12 +34,21 @@ export const ModalAddBlock: FC<Props> = ({
   const textBlockId = useContext(TextBlockIdContext);
   const dispatch = useAppDispatch();
 
-  const addCallout = () => {
+  const remoteTextBlockId = () => {
     if (textBlockId) {
       dispatch(fetchRemoveTextBlock({ id: textBlockId }));
     }
+  };
 
+  const addCallout = () => {
+    remoteTextBlockId();
     dispatch(fetchAddCallout({ pageId, text: "", order: nextOrder }));
+    closeModal();
+  };
+
+  const addTodoList = () => {
+    remoteTextBlockId();
+    dispatch(fetchAddTodo({ pageId, text: "", order: nextOrder }));
     closeModal();
   };
 
@@ -58,6 +69,13 @@ export const ModalAddBlock: FC<Props> = ({
             <div className="content-block">
               <h4>Callout</h4>
               <span className="content-block-describe">Make writing stand out.</span>
+            </div>
+          </StylesListItem>
+          <StylesListItem onClick={addTodoList}>
+            <StyledFactCheckOutlinedIcon />
+            <div className="content-block">
+              <h4>To-do list</h4>
+              <span className="content-block-describe">Track tasks with a to-do list.</span>
             </div>
           </StylesListItem>
         </ul>

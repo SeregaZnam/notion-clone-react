@@ -45,10 +45,6 @@ export const StyledInput = styled.input`
   }
 `;
 
-export const StylesList = styled.ul`
-  //padding: 0 14px;
-`;
-
 export const StylesListItem = styled.li`
   display: flex;
   padding: 0 14px;

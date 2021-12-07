@@ -4,6 +4,7 @@ import { pagesReducer } from "./page/pagesSlice";
 import { commentsReducer } from "./comment/commentSlice";
 import { calloutsReducer } from "./callout/calloutSlice";
 import { textBlocksReducer } from "./text-block/textBlockSlice";
+import { todosReducer } from "./todo/todoSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     comments: commentsReducer,
     callouts: calloutsReducer,
     textBlocks: textBlocksReducer,
+    todo: todosReducer,
   },
 });
 
