@@ -11,7 +11,7 @@
       "id": "7e293e64-e28a-4079-9df7-d386a106557e",
       "title": "Title 2",
       "iconSrc": "",
-      "iconClass": "icon-28"
+      "iconClass": "icon-84"
     },
     {
       "id": "b276045e-bab0-4a89-aae5-bfaacbed8a33",
@@ -81,6 +81,13 @@
       "pageId": "6ac57c99-d9b6-42e7-beec-50f848af2247",
       "order": 6,
       "id": "1a21e48d-1a05-48e9-b199-48824cc620f0",
+      "type": "TextBlock"
+    },
+    {
+      "text": "",
+      "pageId": "7e293e64-e28a-4079-9df7-d386a106557e",
+      "order": 0,
+      "id": "465b39d3-1089-4cc6-97a6-ec5a82f6d51c",
       "type": "TextBlock"
     }
   ],
