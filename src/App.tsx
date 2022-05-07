@@ -5,6 +5,7 @@ import { NormalizedStyles } from "./ResetStyles";
 import { BaseStyles, IconsClasses, StyledMain } from "./BaseStyles";
 
 function App() {
+  console.log("test");
   return (
     <>
       <IconsClasses>
